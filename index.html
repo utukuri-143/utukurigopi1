@@ -144,109 +144,98 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-  // ===== SIMPLE CIRCULAR SKILLS =====
-document.addEventListener('DOMContentLoaded', function() {
-  // Skill data - IMAGE PATHS ONLY
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ================= SKILLS DATA ================= */
   const skillsData = {
     technical: [
-      "ArcGIS_globe.png",
-      "QGIS_logo_new.svg.png", 
-      "globalmap.png",
-      "Google Earth.png",
-      "pro.png",
-      "sql.png",
-      "excel.png"
+      { name: "Google Earth", img: "Google Earth.png" },
+      { name: "QGIS", img: "QGISicon.png" },
+      { name: "ArcGIS", img: "arcgisicon.png" },
+      { name: "Global Mapper", img: "globalmap.png" },
+      { name: "ARCGIS PRO", img: "pro.png" },
+      { name: "SQL", img: "sql.png" },
+      { name: "MS Excel", img: "excel.png" }
     ],
     soft: [
-      "tb.png",
-      "rw.png",
-      "adapat.png",
-      "at.png",
-      "ps.png",
-      "pre.png"
-  ]
+      { name: "Problem solvening", img: "prblm so.png" },
+      { name: "Time Management", img: "timemg.png" },
+      { name: "Presentation Skills", img: "presentation.png" },
+      { name: "Adaptability", img: "adapat.png" },
+      { name: "Report writing ", img: "report writing.png" },
+      { name: "Analytical Thinking", img: "ana.png" }
+    ]
   };
 
-
-  // DOM elements
+  /* ================= DOM ELEMENTS ================= */
   const techBtn = document.getElementById('tech-btn');
   const softBtn = document.getElementById('soft-btn');
   const techCircle = document.getElementById('tech-circle');
   const softCircle = document.getElementById('soft-circle');
-  
-  // Function to arrange icons in a perfect circle
-  function arrangeInCircle(imagePaths, container) {
-    // Clear existing dots
-    const existingDots = container.querySelectorAll('.skill-dot');
-    existingDots.forEach(dot => dot.remove());
-    
-    const radius = 130; // Distance from center
+
+  /* ================= CIRCLE ARRANGEMENT ================= */
+  function arrangeInCircle(skills, container) {
+
+    // Remove old dots
+    container.querySelectorAll('.skill-dot').forEach(dot => dot.remove());
+
+    const radius = 130;
     const centerX = container.offsetWidth / 2;
     const centerY = container.offsetHeight / 2;
-    const total = imagePaths.length;
-    
-    // Calculate positions
-    imagePaths.forEach((imgPath, index) => {
-      // Calculate angle for this item
+    const total = skills.length;
+
+    skills.forEach((skill, index) => {
+
       const angle = (index / total) * Math.PI * 2;
-      
-      // Calculate position
-      const x = centerX + radius * Math.cos(angle) - 30; // 30 = half of dot size
+      const x = centerX + radius * Math.cos(angle) - 30;
       const y = centerY + radius * Math.sin(angle) - 30;
-      
-      // Create skill dot
+
       const dot = document.createElement('div');
       dot.className = 'skill-dot';
       dot.style.left = `${x}px`;
       dot.style.top = `${y}px`;
-      dot.innerHTML = `<img src="${imgPath}" alt="">`;
-      
-      // Add to container
+
+      dot.innerHTML = `
+        <img src="${skill.img}" alt="${skill.name}">
+        <span class="skill-tooltip">${skill.name}</span>
+      `;
+
       container.appendChild(dot);
-      
-      // Animate in with delay
+
       setTimeout(() => {
         dot.classList.add('active');
       }, 50 + index * 50);
     });
   }
-  
-  // Function to show specific skills circle
+
+  /* ================= SHOW SKILLS ================= */
   function showSkills(type) {
-    // Update buttons
+
     techBtn.classList.remove('active');
     softBtn.classList.remove('active');
-    
-    // Hide both circles
     techCircle.classList.remove('active');
     softCircle.classList.remove('active');
-    
-    // Show selected circle
+
     setTimeout(() => {
       if (type === 'technical') {
         techBtn.classList.add('active');
         techCircle.classList.add('active');
-        
-        // Arrange technical skills
         arrangeInCircle(skillsData.technical, techCircle);
       } else {
         softBtn.classList.add('active');
         softCircle.classList.add('active');
-        
-        // Arrange soft skills
         arrangeInCircle(skillsData.soft, softCircle);
       }
     }, 100);
   }
-  
-  // Initialize with technical skills
+
+  /* ================= INIT ================= */
   showSkills('technical');
-  
-  // Button event listeners
+
   techBtn.addEventListener('click', () => showSkills('technical'));
   softBtn.addEventListener('click', () => showSkills('soft'));
-  
-  // Handle window resize
+
+  /* ================= RESPONSIVE ================= */
   let resizeTimeout;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
@@ -258,8 +247,12 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }, 200);
   });
+
 });
 </script>
+
+
+
 <script>
   // ===== CENTER SINGLE CARDS DYNAMICALLY =====
 function centerSingleCards() {
@@ -404,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Content data for each image
     const contentData = {
         content1: {
-            title: "GIS ANALYST",
+            title: "GIS ANALIST",
             icon: "fas fa-globe",
             content: `<p>Bridging Environmental Science & Geospatial Technology. I am an M.Sc. Environmental Scientist and GIS Analyst dedicated to solving complex environmental challenges through spatial intelligence. With a focus on water treatment research and satellite-driven analytics, I transform raw data into actionable insights using ArcGIS, QGIS. Whether it’s calculating Land Surface Temperature or designing precise urban maps, I specialize in high-impact modeling that improves project accuracy and efficiency.</p>`
         },
@@ -707,7 +700,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Page Turn Book for Project 1 -->
         <div class="page-turn-book" data-project="1">
           <!-- Cover Page (Title with Background) -->
-          <div class="page cover-page active" style="background-image: linear-gradient(rgba(186, 240, 240, 0.8), rgba(250, 224, 209, 0.9)), url(leafearthlogo.png);">
+          <div class="page cover-page active" style="background-image: linear-gradient(rgba(186, 240, 240, 0.8), rgba(250, 224, 209, 0.9)), url(researching-laboratory.jpg);">
             <div class="page-content">
               <div class="project-badge">01</div>
               <div class="page-icon">
@@ -761,7 +754,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Page Turn Book for Project 2 -->
         <div class="page-turn-book" data-project="2">
           <!-- Cover Page (Title with Background) -->
-          <div class="page cover-page active" style="background-image: linear-gradient(rgba(246, 248, 248, 0.8), rgba(168, 164, 162, 0.9)), url(lab.jpg)">
+          <div class="page cover-page active" style="background-image: linear-gradient(rgba(249, 249, 249, 0.8), rgba(245, 242, 240, 0.9)), url(lab.jpg)">
             <div class="page-content">
               <div class="project-badge">02</div>
               <div class="page-icon">
@@ -830,7 +823,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Page Turn Book for Project 3 -->
         <div class="page-turn-book" data-project="3">
           <!-- Cover Page (Title with Background) -->
-          <div class="page cover-page active" style="background-image: linear-gradient(rgba(245, 243, 243, 0.8), rgba(145, 143, 142, 0.9)), url('phytochem.jpg');">
+          <div class="page cover-page active" style="background-image: linear-gradient(rgba(245, 243, 243, 0.8), rgba(145, 143, 142, 0.9)), url('ATLS.jpeg');">
             <div class="page-content">
               <div class="project-badge">03</div>
               <div class="page-icon">
@@ -1359,6 +1352,11 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
   </div>
+  
+
+
+
+
 
 </section>
 
@@ -1461,7 +1459,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <p>&copy; 2026 UTUKURI GOPI. All rights reserved.</p>
       <div class="social-links">
         <a href="https://github.com/utukuri-143a" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="www.linkedin.com/in/utukuri-gopi" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.linkedin.com/in/utukuri-gopi" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
         <a href="https://x.com/UGopiii" target="_blank"><i class="fab fa-twitter"></i></a>
       </div>
     </div>
@@ -1922,4 +1920,3 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
-
