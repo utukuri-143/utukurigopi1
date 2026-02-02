@@ -1,0 +1,2681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utukuri Gopi - Portfolio</title>
+  <link rel="icon" href="12.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== CSS RESET & VARIABLES ===== */
+    :root {
+      /* Color Palette */
+      --primary: #00bcd4;
+      --primary-dark: #0097a7;
+      --secondary: #ff4081;
+      --dark-bg: #121212;
+      --dark-card: #1e1e1e;
+      --darker-card: #252525;
+      --light-text: #ffffff;
+      --light-secondary: #bde0fe;
+      --accent: #cdb4db;
+      
+      /* Typography */
+      --font-main: 'Poppins', sans-serif;
+      --font-size-xs: 0.75rem;
+      --font-size-sm: 0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+      --font-size-2xl: 1.5rem;
+      --font-size-3xl: 1.875rem;
+      --font-size-4xl: 2.25rem;
+      
+      /* Spacing */
+      --space-xs: 0.5rem;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2rem;
+      --space-xl: 3rem;
+      --space-2xl: 4rem;
+      
+      /* Border Radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      
+      /* Shadows */
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+      --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+      --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.25);
+      
+      /* Transitions */
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+      --transition-slow: 0.5s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--dark-bg);
+      color: var(--light-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== LAYOUT & CONTAINERS ===== */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+    }
+
+    section {
+      padding: var(--space-2xl) 0;
+      position: relative;
+    }
+
+    .section-title, section h2 {
+      font-size: var(--font-size-3xl);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      position: relative;
+      color: var(--primary);
+    }
+
+    .section-title::after, section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    /* ===== NAVIGATION FIXES ===== */
+    nav {
+      background-color: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      color: var(--light-text);
+      padding: var(--space-sm) 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+      transition: padding var(--transition-normal), background-color var(--transition-normal);
+    }
+
+    nav.scrolled {
+      padding: var(--space-xs) 0;
+      background-color: rgba(18, 18, 18, 0.98);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      min-height: 60px;
+    }
+
+    /* Logo styling */
+    .logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--light-text);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      z-index: 1001;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        font-size: 1.2rem;
+      }
+    }
+
+    .logo i {
+      color: var(--primary);
+    }
+
+    /* Navigation links */
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: var(--space-md);
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--light-secondary);
+      font-size: var(--font-size-base);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transition: var(--transition-normal);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a:hover::before {
+      width: 100%;
+    }
+
+    /* Mobile menu toggle */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 21px;
+      justify-content: space-between;
+      position: relative;
+      background: none;
+      border: none;
+      z-index: 1001;
+    }
+
+    .menu-toggle .bar {
+      width: 100%;
+      height: 3px;
+      background-color: var(--light-text);
+      border-radius: 3px;
+      transition: all var(--transition-normal);
+      transform-origin: center;
+    }
+
+    /* Mobile menu toggle animations */
+    .menu-toggle.active .bar:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .menu-toggle.active .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active .bar:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* ===== HOME SECTION FIXES ===== */
+    .home-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .home-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(0, 188, 212, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 64, 129, 0.1) 0%, transparent 50%);
+      z-index: -1;
+    }
+
+    .home-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    .home-text {
+      text-align: left;
+    }
+
+    .home-text h1 {
+      font-size: var(--font-size-4xl);
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+      color: var(--light-text);
+      line-height: 1.2;
+    }
+
+    .home-text h1 span {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .home-text p {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-lg);
+      color: var(--light-secondary);
+      line-height: 1.5;
+    }
+
+    .home-buttons {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+
+    /* Base button style */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition-normal);
+      cursor: pointer;
+      border: none;
+      font-size: var(--font-size-base);
+      gap: var(--space-xs);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* 1. Primary Button (More) */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      filter: brightness(1.1);
+    }
+
+    /* 2. Download CV Button */
+    .btn-download {
+      background-color: transparent;
+      color: var(--light-text);
+      border: 2px solid var(--secondary);
+    }
+
+    .btn-download:hover {
+      background-color: var(--secondary);
+      color: var(--dark-bg);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .home-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .home-image img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: var(--shadow-xl);
+      border: 4px solid transparent;
+      background: linear-gradient(white, white) padding-box,
+                  linear-gradient(135deg, var(--primary), var(--secondary)) border-box;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* ===== CONFERENCES SECTION ===== */
+    .conferences-section {
+      background-color: var(--dark-card);
+    }
+
+    .conferences-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .conference-card {
+      background-color: var(--dark-card);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-normal);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--primary-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+    }
+
+    .conference-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .conference-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+    }
+
+    .conference-card i {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-md);
+      color: var(--primary);
+    }
+
+    .conference-card h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-sm);
+      color: var(--light-text);
+      line-height: 1.4;
+    }
+
+    .conference-card p {
+      color: var(--light-secondary);
+      font-size: var(--font-size-sm);
+      margin-bottom: var(--space-xs);
+      text-align: center;
+      width: 100%;
+    }
+
+    .conference-card p strong {
+      color: var(--primary);
+    }
+
+    /* ===== RESPONSIVE DESIGN FIXES ===== */
+    
+    /* Tablet */
+    @media (max-width: 992px) {
+      .home-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: var(--space-xl);
+      }
+      
+      .home-text {
+        text-align: center;
+      }
+      
+      .home-text h1 {
+        font-size: var(--font-size-3xl);
+      }
+      
+      .home-text p {
+        font-size: var(--font-size-lg);
+      }
+      
+      .home-image img {
+        max-width: 350px;
+        margin: 0 auto;
+      }
+      
+      .home-buttons {
+        justify-content: center;
+      }
+      
+      /* Slider Responsive */
+      .profile-slider {
+        height: 350px;
+      }
+    }
+
+    /* Mobile (768px and below) */
+    @media (max-width: 768px) {
+      .section-title, section h2 {
+        font-size: var(--font-size-2xl);
+      }
+      
+      /* Mobile menu configuration - FIXED */
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: var(--dark-bg);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 80px;
+        padding-left: var(--space-md);
+        gap: var(--space-md);
+        transition: right 0.3s ease-in-out;
+        box-shadow: var(--shadow-lg);
+        z-index: 999;
+        overflow-y: auto;
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links li { 
+        width: 100%;
+        text-align: left;
+      }
+      
+      .nav-links a {
+        font-size: var(--font-size-lg);
+        padding: var(--space-sm) 0;
+        justify-content: flex-start;
+      }
+      
+      .menu-toggle {
+        display: flex;
+      }
+      
+      /* Home section fixes */
+      .home-section {
+        padding-top: 70px;
+        min-height: 90vh;
+      }
+      
+      .home-text h1 {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--space-sm);
+      }
+      
+      .home-text p {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--space-md);
+      }
+      
+      .home-image img {
+        max-width: 280px;
+      }
+      
+      /* Grid fixes */
+      .education-grid,
+      .projects-grid,
+      .certificates-grid,
+      .internships-grid,
+      .conferences-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+      
+      .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      }
+      
+      /* Slider fixes */
+      .profile-slider {
+        height: 250px;
+      }
+      
+      .profile-slider-nav {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+      }
+      
+      .profile-slider-nav.prev {
+        left: var(--space-xs);
+      }
+      
+      .profile-slider-nav.next {
+        right: var(--space-xs);
+      }
+    }
+
+    /* Small Mobile (576px and below) */
+    @media (max-width: 576px) {
+      .container {
+        width: 95%;
+        padding: 0 var(--space-sm);
+      }
+      
+      section {
+        padding: var(--space-xl) 0;
+      }
+      
+      .home-section {
+        padding-top: 60px;
+      }
+      
+      .home-text h1 {
+        font-size: var(--font-size-xl);
+      }
+      
+      .home-text p {
+        font-size: var(--font-size-sm);
+      }
+      
+      .home-buttons {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 250px;
+        padding: var(--space-sm) var(--space-md);
+      }
+      
+      /* Image fixes */
+      .home-image img {
+        max-width: 240px;
+      }
+      
+      /* Slider fixes */
+      .profile-slider {
+        height: 200px;
+      }
+      
+      .profile-slider-title {
+        font-size: var(--font-size-xl);
+      }
+      
+      /* Project tabs */
+      .project-tabs {
+        flex-direction: column;
+        width: 100%;
+        gap: var(--space-sm);
+      }
+      
+      .tab-btn {
+        width: 100%;
+      }
+      
+      /* Skills grid */
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+      }
+      
+      .skill-item {
+        padding: var(--space-md);
+      }
+      
+      /* Conference cards */
+      .conference-card h3 {
+        font-size: var(--font-size-base);
+      }
+      
+      .conference-card p {
+        font-size: var(--font-size-xs);
+      }
+    }
+
+    /* Extra Small Mobile (400px and below) */
+    @media (max-width: 400px) {
+      .home-text h1 {
+        font-size: var(--font-size-lg);
+      }
+      
+      .home-image img {
+        max-width: 200px;
+      }
+      
+      .profile-slider {
+        height: 180px;
+      }
+      
+      .profile-slider-nav {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+      }
+      
+      .logo {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* ===== EXISTING STYLES (unchanged) ===== */
+    /* Keep all your existing styles below - I've just shown the fixes above */
+
+    /* ===== UPDATED SLIDER SECTION ===== */
+    .profile-slider-section {
+      background: linear-gradient(135deg, var(--dark-card) 0%, var(--darker-card) 100%);
+      padding: var(--space-2xl) 0;
+      color: var(--light-text);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .profile-slider-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(0, 188, 212, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 64, 129, 0.1) 0%, transparent 50%);
+      z-index: 0;
+    }
+
+    .profile-slider-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-md);
+      position: relative;
+      z-index: 1;
+    }
+
+    .profile-slider-title {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      font-size: var(--font-size-3xl);
+      font-weight: 700;
+      color: var(--primary);
+      position: relative;
+    }
+
+    .profile-slider-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    /* Main Slider Container */
+    .profile-slider {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      background: var(--dark-card);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .slider-wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* Banner Slide Styling */
+    .profile-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity var(--transition-slow) ease-in-out;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .profile-slide.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    /* Banner Image Container */
+    .slide-banner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform var(--transition-slow);
+    }
+
+    .profile-slide.active .slide-banner img {
+      transform: scale(1.02);
+    }
+
+    /* Navigation Buttons */
+    .profile-slider-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: none;
+      color: var(--light-text);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all var(--transition-normal);
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .profile-slider-nav:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--primary);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .profile-slider-nav.prev {
+      left: var(--space-md);
+    }
+
+    .profile-slider-nav.next {
+      right: var(--space-md);
+    }
+
+    /* Slider Indicators */
+    .profile-slider-indicators {
+      display: flex;
+      justify-content: center;
+      margin-top: var(--space-lg);
+      gap: var(--space-sm);
+      z-index: 10;
+      position: relative;
+    }
+
+    .profile-slider-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all var(--transition-normal);
+      border: none;
+    }
+
+    .profile-slider-indicator.active {
+      background-color: var(--primary);
+      transform: scale(1.2);
+      box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+    }
+
+    .profile-slider-indicator:hover:not(.active) {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    .about-section {
+      background-color: var(--dark-card);
+      position: relative;
+    }
+
+    .about-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 10% 20%, rgba(0, 188, 212, 0.05) 0%, transparent 50%);
+      z-index: 0;
+    }
+
+    .about-section .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== EDUCATION SECTION ===== */
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .education-card {
+      background-color: var(--dark-card);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-normal);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--primary-dark);
+    }
+
+    .education-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .education-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+    }
+
+    .education-card i {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-md);
+      color: var(--primary);
+    }
+
+    .education-card h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-sm);
+      color: var(--light-text);
+    }
+
+    .education-card p {
+      color: var(--light-secondary);
+      font-size: var(--font-size-base);
+    }
+
+    /* ===== PROJECTS SECTION ===== */
+    .projects-section {
+      background-color: var(--dark-card);
+    }
+
+    .project-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: var(--space-xl);
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background-color: var(--darker-card);
+      color: var(--light-text);
+      border: none;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--primary);
+    }
+
+    .tab-btn:hover:not(.active) {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-lg);
+      display: none;
+    }
+
+    .projects-grid.active {
+      display: grid;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Base style for all project cards */
+    .project-card {
+      background-color: var(--dark-card);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--primary-dark);
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      z-index: 2;
+    }
+
+    /* Academic Projects */
+    #academic-projects .project-card {
+        padding: var(--space-lg);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #academic-projects .project-card i {
+        font-size: 2.5rem;
+        margin-bottom: var(--space-md);
+        color: var(--primary);
+    }
+
+    #academic-projects .project-card h3 {
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--space-sm);
+        color: var(--light-text);
+    }
+
+    #academic-projects .project-card p {
+        color: var(--light-secondary);
+        font-size: var(--font-size-base);
+        margin-bottom: 0;
+    }
+
+    /* Basic Projects */
+    .basic-project-card {
+        min-height: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0;
+    }
+
+    .project-bg-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.4);
+        transition: filter var(--transition-normal);
+        z-index: 0;
+    }
+
+    .basic-project-card:hover .project-bg-image {
+        filter: brightness(0.6);
+    }
+
+    .project-content-visible {
+        position: relative;
+        padding: var(--space-lg);
+        background-color: rgba(30, 30, 30, 0.7);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: left;
+        z-index: 1;
+    }
+
+    .project-content-visible h3 {
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--space-sm);
+        color: var(--primary);
+    }
+
+    .project-content-visible p {
+        color: var(--light-secondary);
+        font-size: var(--font-size-base);
+        margin-bottom: var(--space-md);
+        flex-grow: 1;
+    }
+
+    .project-content-visible .project-btn {
+        display: inline-block;
+        text-align: center;
+        padding: var(--space-sm);
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white;
+        text-decoration: none;
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        transition: var(--transition-normal);
+        width: 100%;
+    }
+
+    .project-content-visible .project-btn:hover {
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    #basic-projects .project-card img {
+        display: none;
+    }
+
+    #academic-projects .projects-grid,
+    #basic-projects .projects-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    /* ===== SKILLS SECTION ===== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--space-lg);
+      justify-items: center;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--dark-card);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-normal);
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .skill-item:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .skill-item i {
+      font-size: 3rem;
+      margin-bottom: var(--space-sm);
+      transition: var(--transition-normal);
+    }
+
+    .skill-item:hover i {
+      transform: scale(1.1);
+    }
+
+    .skill-item p {
+      font-weight: 600;
+      color: var(--light-text);
+    }
+
+    /* Skill icons colors */
+    .skill-item i.fa-file-excel { color: #1D6F42; }
+    .skill-item i.fa-file-powerpoint { color: #D24726; }
+    .skill-item i.fa-file-word { color: #2A5699; }
+    .skill-item i.fa-chart-column { color: #F2C811; }
+    .skill-item i.fa-square-root-variable { color: #6A1B9A; }
+    .skill-item i.fa-map-location-dot { color: #1E88E5; }
+    .skill-item i.fa-map { color: #4CAF50; }
+    .skill-item i.fa-earth-asia { color: #1565C0; }
+    
+    .skill-item img.skill-icon {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    /* ===== CERTIFICATES SECTION ===== */
+    .certificates-section {
+      background-color: var(--dark-card);
+    }
+
+    .certificates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .certificate-card {
+      background-color: var(--darker-card);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-normal);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .certificate-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .certificate-card h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-md);
+      color: var(--light-text);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .btn-validate {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 8px 17px;
+      font-size: 15px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition-normal);
+      margin-top: auto;
+    }
+
+    .btn-validate:hover {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .cert-image {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.15);
+    }
+
+    /* ===== INTERNSHIPS SECTION ===== */
+    .internships-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .internship-card {
+      background-color: var(--dark-card);
+      padding: var(--space-lg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-normal);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .internship-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .internship-card h3 {
+      font-size: var(--font-size-lg);
+      margin-bottom: var(--space-sm);
+      color: var(--light-text);
+    }
+
+    .internship-card p {
+      color: var(--light-secondary);
+    }
+
+    /* ===== CONTACT SECTION ===== */
+    .contact-section {
+      background-color: var(--dark-card);
+    }
+
+    #contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: var(--darker-card);
+      padding: var(--space-xl);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: var(--space-xs);
+      font-weight: 600;
+      color: var(--light-text);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: var(--space-sm);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--light-text);
+      font-size: var(--font-size-base);
+      transition: var(--transition-normal);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.2);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    #contact-form button {
+      width: 100%;
+      padding: var(--space-sm);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-normal);
+    }
+
+    #contact-form button:hover {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .form-response {
+      margin-top: var(--space-md);
+      text-align: center;
+      font-size: var(--font-size-base);
+      padding: var(--space-sm);
+      border-radius: var(--radius-md);
+      background-color: rgba(255, 255, 255, 0.05);
+      transition: var(--transition-normal);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background-color: var(--darker-card);
+      color: var(--light-text);
+      text-align: center;
+      padding: var(--space-xl) 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    footer p {
+      margin-bottom: var(--space-md);
+      color: var(--light-secondary);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--dark-card);
+      color: var(--light-secondary);
+      font-size: 1.25rem;
+      transition: var(--transition-normal);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .social-links a:hover {
+      color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Slider Animations */
+    @keyframes slideInFromRight {
+      from { opacity: 0; transform: translateX(100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInFromLeft {
+      from { opacity: 0; transform: translateX(-100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .profile-slide.active[data-direction="next"] {
+      animation: slideInFromRight 0.8s ease-out;
+    }
+
+    .profile-slide.active[data-direction="prev"] {
+      animation: slideInFromLeft 0.8s ease-out;
+    }
+
+    /* ===== SCROLLBAR STYLING ===== */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--dark-bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
+    }
+
+
+   /* ===== HOBBIES SECTION ===== */
+/* ===== HOBBIES SECTION WITH FLIP CARDS ===== */
+.hobbies-section {
+  background-color: var(--dark-card);
+  padding: var(--space-2xl) 0;
+}
+
+.hobbies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+/* Flip Card Container */
+.hobby-card {
+  background-color: transparent;
+  perspective: 1000px;
+  height: 280px;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  position: relative;
+}
+
+.hobby-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: var(--radius-lg);
+  will-change: transform;
+}
+
+/* REMOVED hover-only selector, using only active class */
+.hobby-card.flipped .hobby-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Mobile touch indicator */
+.hobby-card::after {
+  content: 'Tap to flip';
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--light-secondary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .hobby-card::after {
+    opacity: 1;
+  }
+}
+
+/* Front and back sides */
+.hobby-card-front, .hobby-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* Front side (image) */
+.hobby-card-front {
+  background-color: var(--dark-card);
+  border: 2px solid var(--primary-dark);
+  overflow: hidden;
+}
+
+.hobby-card-front::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  z-index: 2;
+}
+
+.hobby-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  transition: transform 0.5s ease;
+}
+
+.hobby-card.flipped .hobby-image {
+  transform: scale(1.05);
+}
+
+.hobby-icon-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.hobby-card.flipped .hobby-icon-overlay {
+  background: rgba(0, 188, 212, 0.9);
+  width: 65px;
+  height: 65px;
+}
+
+.hobby-icon-overlay i {
+  font-size: 1.8rem;
+  color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.hobby-card.flipped .hobby-icon-overlay i {
+  color: white;
+  font-size: 2rem;
+}
+
+.hobby-title-front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  color: white;
+  padding: var(--space-sm);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  z-index: 1;
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Back side (text) */
+.hobby-card-back {
+  background-color: var(--dark-card);
+  border: 2px solid var(--primary);
+  transform: rotateY(180deg);
+  text-align: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hobby-card-back::-webkit-scrollbar {
+  width: 4px;
+}
+
+.hobby-card-back::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.hobby-card-back i {
+  font-size: 2.2rem;
+  margin-bottom: var(--space-sm);
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.hobby-card-back h3 {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-sm);
+  color: var(--light-text);
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.hobby-card-back p {
+  color: var(--light-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  margin-bottom: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+/* Close button */
+.hobby-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: var(--light-text);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hobby-card.flipped .hobby-close-btn {
+  opacity: 1;
+}
+
+.hobby-close-btn i {
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Desktop hover support */
+@media (hover: hover) and (pointer: fine) {
+  .hobby-card:hover .hobby-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .hobby-card:hover .hobby-image {
+    transform: scale(1.05);
+  }
+  
+  .hobby-card:hover .hobby-icon-overlay {
+    background: rgba(0, 188, 212, 0.9);
+    width: 65px;
+    height: 65px;
+  }
+  
+  .hobby-card:hover .hobby-icon-overlay i {
+    color: white;
+    font-size: 2rem;
+  }
+  
+  /* Hide close button on desktop hover */
+  .hobby-card:hover .hobby-close-btn {
+    display: none;
+  }
+  
+  /* Hide tap indicator on desktop */
+  .hobby-card::after {
+    display: none;
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Desktop - 3 columns */
+@media (min-width: 1200px) {
+  .hobbies-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet - 2 columns */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .hobbies-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+  
+  .hobby-card {
+    height: 260px;
+  }
+}
+
+/* Mobile - 1 column */
+@media (max-width: 767px) {
+  .hobbies-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .hobby-card {
+    height: 250px;
+    margin-bottom: var(--space-md);
+  }
+  
+  .hobby-card::after {
+    bottom: -20px;
+  }
+  
+  .hobby-card-front, .hobby-card-back {
+    padding: var(--space-md);
+  }
+  
+  .hobby-icon-overlay {
+    width: 55px;
+    height: 55px;
+  }
+  
+  .hobby-icon-overlay i {
+    font-size: 1.6rem;
+  }
+  
+  .hobby-card-back i {
+    font-size: 2rem;
+    margin-bottom: var(--space-xs);
+  }
+  
+  .hobby-card-back h3 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-xs);
+  }
+  
+  .hobby-card-back p {
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
+  }
+  
+  /* Show close button on mobile */
+  .hobby-card.flipped .hobby-close-btn {
+    display: flex;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .hobbies-grid {
+    max-width: 100%;
+  }
+  
+  .hobby-card {
+    height: 230px;
+  }
+  
+  .hobby-card-front, .hobby-card-back {
+    padding: var(--space-sm);
+  }
+  
+  .hobby-title-front {
+    font-size: var(--font-size-sm);
+    padding: 8px var(--space-xs);
+  }
+  
+  .hobby-card-back h3 {
+    font-size: var(--font-size-sm);
+  }
+  
+  .hobby-card-back p {
+    font-size: 0.75rem;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="container nav-container">
+        <h1 class="logo"><i class="fa-solid fa-user-tie"></i> Portfolio</h1>
+        <ul class="nav-links">
+            <li><a href="#home"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a></li>
+            <li><a href="#projects"><i class="fa-solid fa-laptop-code"></i> Projects</a></li>
+            <li><a href="#conferences"><i class="fa-solid fa-chalkboard-user"></i> Conferences</a></li>
+            <li><a href="#skills"><i class="fa-solid fa-lightbulb"></i> Skills</a></li>
+            <li><a href="#certificates"><i class="fa-solid fa-certificate"></i> Certificates</a></li>
+            <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact Me</a></li>
+        </ul>
+        
+        <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
+  </nav>
+
+  <!-- Home Section -->
+  <section id="home" class="home-section">
+    <div class="container">
+      <div class="home-content">
+        <div class="home-text">
+          <h1>UTUKURI GOPI</h1>
+          <p>GIS ANALYST & Environmental Science Post Graduate | CO- Authour of two reasearch articles, ENVIRONMENTAL SCINECE, GIS, Python & R | Passionate About Geospatial analysis & Research In waste water treatment</p>
+          <div class="home-buttons">
+            <a href="#about" class="btn btn-primary">More <i class="fas fa-arrow-right"></i></a>
+            <a href="resume" download class="btn btn-download"><i class="fas fa-download"></i> Download CV</a>
+          </div>
+        </div>
+        <div class="home-image">
+          <img src="photo" alt="Yaseena Shaik">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <h2>Career Objective</h2>
+      <h3 style="font-size:18px; line-height:1.6; font-weight:500; color:white; text-align:justify; margin:0;">Results-oriented Environmental Science student and GIS Analyst with an M.Sc. in Environmental Science and specialized training in Geo-spatial Technologies. Proficient in ArcGIS, QGIS, Remote Sensing, and Satellite Image Processing. Basic technical background in Data Analysis (Python,SQL, Power BI) and strong techinical knowledge in Water Quality Assessment. Proven ability to integrate environmental data with spatial analysis to solve complex ecological and urban planning challenges. Seeking a GIS position to leverage skills in spatial data management, mapping, and Geo-processing.
+</h3>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education" class="education-section">
+    <div class="container">
+      <h2>Education</h2>
+      
+      <div class="education-grid">
+        <div class="education-card">
+          <img src="cuk.png" class="cert-image" alt="Graduation">
+        </br>
+          <h4 style="font-size:18px;font-weight:600;padding:6px 14px;border-radius:12px;color:#00bcd4;display:inline-block;">Post Graduation</h4>
+          <h3>CENTRAL UNIVERISTY OF KERALA </h3>
+          <h3>Environmental science</h3>
+          <p>CGPA: 7.40 | 2021 – 2023</p>
+        </div>
+        <div class="education-card">
+          <img src="de.png" class="cert-image" alt="Intermediate">
+        </br>
+          <h4 style="font-size:18px;font-weight:600;padding:6px 14px;border-radius:12px;color:#00bcd4;display:inline-block;">Graduation</h4>
+          <h3>Kakatiya University</h3>
+          <h4>SR&BGNR Govt Arts&Scinece college - Khammam, Telangana </h4>
+          <h4>M.P.CS</h4>
+          <p>GPA:7.72 | 2017 – 2021</p>
+        </div>
+        <div class="education-card">
+          <img src="TSBIE_Logo.png" class="cert-image" alt="SSC">
+          <h4 style="font-size:18px;font-weight:600;padding:6px 14px;border-radius:12px;color:#00bcd4;display:inline-block;">Intermediate Education </h4>
+          <h3>M.P.C</h3>
+          <h4>Grace junior college- Thanikella,Khammmam,Telangana</h4>
+          <p>GPA: 7.53 | 2015 – 2017</p>
+        </div>
+        <div class="education-card">
+          <img src="download__1_-removebg-preview.png" class="cert-image" alt="SSC">
+          <h4 style="font-size:18px;font-weight:600;padding:6px 14px;border-radius:12px;color:#00bcd4;display:inline-block;">Secondary School Education </h4>
+          <h4>Ts residential School(B)-Enkoor Board of Secondary Education </h4>
+          <p>GPA:8.5| 2014 – 2015</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects-section">
+    <div class="container">
+      <h2>PROJECT & PUBLICATIONS</h2>
+  
+      <!-!
+
+      <!-- Academic Projects -->
+      <div id="academic-projects" class="projects-grid active">
+        <div class="project-card">
+         <i class="fas fa-file-alt"></i>
+          <h3>ENVIRONMENTAL CHEMISTRY </h3>
+          <h4>Photoelectrocatalytic oxidation of progesterone in water using carbon-coated titanium anode and vanadium pentoxide catalyst: dynamics of steroid removal</h4>
+        
+          <br/>
+           <a href="https://doi.org/10.1007/s10800-024-02081-4" target="_blank" class="btn btn-validate">View</a>
+        </div>
+        <div class="project-card">
+         <i class="fas fa-newspaper"></i>
+          <h3>ENVIRONMENTAL CHEMISTRY </h3>
+          <h4>Anodic oxidation of esomeprazole in water by carbon coated titanium (C/Ti) electrode: Optimization and degradation analysis</h4>
+
+          <a href=" https://doi.org/10.1002/tqem.22222" target="_blank" class="btn btn-validate">View</a>
+        </div>
+        <div class="project-card">
+          <i class="fas fa-book-open"></i>
+          <h3>THESIS</h3>
+          <h3>Optimization of variables for the degradation of progesterone from water using Photoelectrocatalytic oxidtion process</h3>
+          <p></p>
+          <a href="Pgt.PDF" target="_blank" class="btn btn-validate">View</a>
+        </div>
+      </div>
+
+      <div id="basic-projects" class="projects-grid">
+        <div class="project-card basic-project-card">
+          <div class="project-bg-image" style="background-image: url('p1.jpg');"></div>
+          <div class="project-content-visible">
+              <h3>Movie Website</h3>
+              <p>A dynamic movie browsing website built using HTML, CSS, and JavaScript, offering an interactive way to explore Movies.</p>
+              <a href="https://saivenkatachala.github.io/cine/" target="_blank" class="project-btn">Open Project</a>
+          </div>
+        </div>
+        <div class="project-card basic-project-card">
+          <div class="project-bg-image" style="background-image: url('p2.jpg');"></div>
+          <div class="project-content-visible">
+              <h3>Expense Tracker Website</h3>
+              <p>A simple and interactive expense tracker built using HTML, CSS, and JavaScript to help manage and monitor daily expenses.</p>
+              <a href="https://saivenkatachala.github.io/EXPENSE/" target="_blank" class="project-btn">Open Project</a>
+          </div>
+        </div>
+        <div class="project-card basic-project-card">
+          <div class="project-bg-image" style="background-image: url('p3.jpg');"></div>
+          <div class="project-content-visible">
+              <h3>Weather App</h3>
+              <p>A real-time weather forecasting web app built using JavaScript and OpenWeather API.</p>
+              <a href="https://saivenkatachala.github.io/Weather/" target="_blank" class="project-btn">Open Project</a>
+          </div>
+        </div>
+        <div class="project-card basic-project-card">
+          <div class="project-bg-image" style="background-image: url('p8.jpg');"></div>
+          <div class="project-content-visible">
+              <h3>Perfect Cards & Printers</h3>
+              <p>A modern website for a printing business built with HTML, CSS, and JavaScript.</p>
+              <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open Project</a>
+          </div>
+        </div>
+        <div class="project-card basic-project-card">
+          <div class="project-bg-image" style="background-image: url('P9.jpg');"></div>
+          <div class="project-content-visible">
+              <h3>Sharekaro</h3>
+              <p>A file-sharing platform concept developed using web technologies.</p>
+              <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open Project</a>
+          </div>
+        </div>
+        <div class="project-card basic-project-card">
+          <div class="project-bg-image" style="background-image: url('p5.jpg');"></div>
+          <div class="project-content-visible">
+              <h3>Todo List Website</h3>
+              <p>A lightweight and user-friendly to-do list app built using HTML, CSS, and JavaScript to efficiently organize daily tasks.</p>
+              <a href="https://saivenkatachala.github.io/todolist/" target="_blank" class="project-btn">Open Project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conferences Section -->
+  <section id="conferences" class="conferences-section">
+    <div class="container">
+      <h2>Conferences, Seminars & Webinars Participation</h2>
+      <div class="conferences-grid">
+        <div class="conference-card">
+          <i class="fas fa-globe"></i>
+          <h3>International e-Conference "Climate Resilience and Disaster Risk Management for Sustainable Development"</h3>
+          <p><strong>Organized by:</strong> Nizam College (Osmania University), FCRI, and Council for Green Revolution, Hyderabad</p>
+          <p><strong>Date:</strong> August 17–18, 2020</p>
+          <p><strong>Mode:</strong> Virtual Participation</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-laptop"></i>
+          <h3>Webinar "Indian Biodiversity and its Conservation"</h3>
+          <p><strong>Organized by:</strong> Nature Club of Rajapalayam Rajus' College and Wildlife Association of Rajapalayam (WAR)</p>
+          <p><strong>Date:</strong> August 26, 2020</p>
+          <p>25th webinar series participation</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-fish"></i>
+          <h3>Webinar "The Mistaken Mermaid of the Sea – Dugong, the Sea Cow"</h3>
+          <p><strong>Organized by:</strong> Marine Aquarium and Regional Centre, Zoological Survey of India, Ministry of Environment, Forests & Climate Change</p>
+          <p><strong>Date:</strong> October 15, 2020</p>
+          <p><strong>Location:</strong> Digha, West Bengal</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-tree"></i>
+          <h3>International Seminar "Advances in Wood Science for Natural Resources Sustainability"</h3>
+          <p><strong>Organized by:</strong> Wood Anatomy Division, Forest Research Institute, Dehradun</p>
+          <p><strong>Date:</strong> March 25, 2022</p>
+          <p>Explored advancements in wood science for sustainable natural resource management</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-seedling"></i>
+          <h3>National Seminar "Intellectual Property Rights in Forest Genetic Resource Conservation and Management"</h3>
+          <p><strong>Organized by:</strong> Department of Tree Breeding and Improvement, Forest College and Research Institute (FCRI)</p>
+          <p><strong>Date:</strong> December 9, 2022</p>
+          <p>Explored the role of intellectual property rights in forest genetic resource management</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-leaf"></i>
+          <h3>International Conference "Advances in Plant Sciences for Sustainable Future" (ICAPSSF-2024)</h3>
+          <p><strong>Organized by:</strong> Department of Botany and Botany Alumni, Osmania University, Hyderabad</p>
+          <p><strong>Date:</strong> February 7–9, 2024</p>
+          <p>Participated during Centenary Celebrations of Department of Botany. Engaged in discussions on advancements in plant sciences for sustainability</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-mountain"></i>
+          <h3>National Conference "Himalayan Ecosystem: Threats, Resilience & Sustainable Management"</h3>
+          <p><strong>Organized by:</strong> Government PG College Nagnath-Pokhari (Chamoli), Uttarakhand, and Uttarakhand Science & Education Research Centre (USERC), Dehradun</p>
+          <p><strong>Date:</strong> February 26–27, 2024</p>
+          <p><strong>Paper Presented:</strong> "Medicinal Plants Conservation in the Himalayan Region: Balancing Traditional Knowledge and Sustainable Use"</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-dna"></i>
+          <h3>National Level e-Conference "International Day of Biological Diversity 2024"</h3>
+          <p><strong>Organized by:</strong> Department of Botany, Green Committee, Eco Club, and NSS, Government City College (A), Nayapul, Hyderabad in Association with TBB</p>
+          <p><strong>Date:</strong> May 22, 2024</p>
+          <p><strong>Theme:</strong> "Be Part of the Plan"</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-satellite"></i>
+          <h3>Hybrid Workshop "Assessment of Impact of Climate Change on Vegetation Ecosystems using Geospatial Technologies"</h3>
+          <p><strong>Organized by:</strong> Lab for Spatial Informatics, International Institute of Information Technology (IIIT), Hyderabad</p>
+          <p><strong>Date:</strong> November 27, 2024</p>
+          <p>Gained insights into geospatial technologies for climate change impact assessment</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-microscope"></i>
+          <h3>National Symposium and Workshop "Recent Trends in Forest Biotechnology Research"</h3>
+          <p><strong>Organized by:</strong> Department of Tree Breeding and Improvement, Forest College and Research Institute, Hyderabad</p>
+          <p><strong>Date:</strong> August 20, 2024</p>
+          <p><strong>Sponsor:</strong> DST-SERB sponsored</p>
+        </div>
+        <div class="conference-card">
+          <i class="fas fa-capsules"></i>
+          <h3>Workshop "Capacity building cum Sensitization Workshop on Voluntary Certification Scheme for Medicinal Plant Produce"</h3>
+          <p><strong>Organized by:</strong> National Medicinal Plant Board and the Quality Council of India</p>
+          <p><strong>Date:</strong> May 21, 2024</p>
+          <p><strong>Location:</strong> Hyderabad, Telangana</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="skills-section">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <i class="fa-solid fa-file-excel"></i>
+          <p>Excel</p>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-file-powerpoint"></i>
+          <p>PowerPoint</p>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-file-word"></i>
+          <p>Word</p>
+        </div>
+        <div class="skill-item">
+          <i class="devicon-python-plain colored"></i>
+          <p>Python</p>
+        </div>
+        <div class="skill-item">
+          <i class="devicon-r-plain colored"></i>
+          <p>R</p>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-chart-column"></i>
+          <p>Power BI</p>
+        </div>
+        <div class="skill-item">
+          <img src="tb.png" alt="Tableau" class="skill-icon">
+          <p>Tableau</p>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-square-root-variable"></i>
+          <p>Statistics</p>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <p>ArcGIS</p>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-map"></i>
+          <p>QGIS</p>
+        </div>
+        <div class="skill-item">
+          <i class="fa-solid fa-earth-asia"></i>
+          <p>GoogleEarth</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificates Section -->
+  <section id="certificates" class="certificates-section">
+    <div class="container">
+      <h2>Certificates</h2>
+      <div class="certificates-grid">
+        <div class="certificate-card">
+          <h3><img src="ced.png" class="cert-image" alt="Red Hat Certificate"> GIS&REMOTE SENSING </h3>
+          <a href="" target="_blank" class="btn btn-validate">View</a>
+        </div>
+        <div class="certificate-card">
+          <h3><img src="SKILL.png" class="cert-image" alt="Red Hat Certificate">POWER BI</h3>
+          <a href="Power BI Certificate_251215_120548.PDF" target="_blank" class="btn btn-validate">View</a>
+        </div>
+        <div class="certificate-card">
+          <h3><img src="ALEX.png" class="cert-image" alt="Red Hat Certificate">SQL</h3>
+          <a href="" target="_blank" class="btn btn-validate">View</a>
+        </div>
+        <div class="certificate-card">
+          <h3><img src="LCMS.png" class="cert-image" alt="Red Hat Certificate">  LMS INETRNAL AUDITOR-IEC 17025:2017</h3>
+          <a href="UTUKURI GOPI LMS (1).pdf" target="_blank" class="btn btn-validate">View</a>
+        </div>
+        <div class="certificate-card">
+          <h3><img src="SWYAMM.png" class="cert-image" alt="Red Hat Certificate">WATER RESOURCES &WATERSHED MANAGEMENT </h3>
+          <a href="Swyam.PDF" target="_blank" class="btn btn-validate">View</a>
+        </div>
+        <div class="certificate-card">
+          <h3><img src="CWRDM.png" class="cert-image" alt="Red Hat Certificate">Workshop on Water Budgeting CWRDM </h3>
+          <a href="" target="_blank" class="btn btn-validate">View</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internships Section -->
+  <section id="internships" class="internships-section">
+    <div class="container">
+      <h2>Internships</h2>
+      <div class="internships-grid">
+        <div class="internship-card">
+          <h3>AICTE - EduSkills Virtual Internship</h3>
+          <p>Duration: May - July</p>
+        </div>
+        <div class="internship-card">
+          <h3>AWS Data Analytics Virtual Internship</h3>
+          <p>Duration: May - July</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Hobbies & Interests Section -->
+<!-- Hobbies & Interests Section -->
+<section id="hobbies" class="hobbies-section">
+  <div class="container">
+    <h2>Hobbies & Interests</h2>
+    <div class="hobbies-grid">
+      <!-- Trekking & Hiking -->
+      <div class="hobby-card" data-hobby="trekking">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Trekking & Hiking" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-mountain"></i>
+            </div>
+            <div class="hobby-title-front">Trekking & Hiking</div>
+          </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-mountain"></i>
+            <h3>Trekking & Hiking</h3>
+            <p>Exploring diverse forest ecosystems and mountainous landscapes through outdoor adventures, connecting with nature while building physical endurance.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bird Watching -->
+      <div class="hobby-card" data-hobby="bird-watching">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bird Watching" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-dove"></i>
+            </div>
+            <div class="hobby-title-front">Bird Watching</div>
+          </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-dove"></i>
+            <h3>Bird Watching</h3>
+            <p>Identifying avian species and understanding their behavior, migration patterns, and ecological roles in different habitats through careful observation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tree Identification -->
+      <div class="hobby-card" data-hobby="tree-id">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tree Identification" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-tree"></i>
+            </div>
+            <div class="hobby-title-front">Tree Identification</div>
+          </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-tree"></i>
+            <h3>Tree Identification</h3>
+            <p>Studying native and exotic tree species, their characteristics, growth patterns, and ecological significance for conservation and education purposes.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ecological Restoration -->
+      <div class="hobby-card" data-hobby="restoration">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ecological Restoration" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-seedling"></i>
+            </div>
+            <div class="hobby-title-front">Ecological Restoration</div>
+          </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-seedling"></i>
+            <h3>Ecological Restoration</h3>
+            <p>Participating in afforestation and habitat restoration programs to support biodiversity conservation and ecosystem recovery efforts.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nature Photography -->
+      <div class="hobby-card" data-hobby="photography">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Nature Photography" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-camera"></i>
+            </div>
+            <div class="hobby-title-front">Nature Photography</div>
+          </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-camera"></i>
+            <h3>Nature Photography</h3>
+            <p>Documenting flora, fauna, and landscapes to capture the beauty of natural ecosystems and raise environmental awareness through visual storytelling.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Foraging -->
+      <div class="hobby-card" data-hobby="foraging">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Foraging" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <div class="hobby-title-front">Foraging</div>
+          </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-leaf"></i>
+            <h3>Foraging</h3>
+            <p>Foraging for wild edibles like fruits, nuts, berries, or herbs while practicing sustainable harvesting techniques and traditional ecological knowledge.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <h2>Contact Me</h2>
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+      <div id="form-response" class="form-response"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Yaseena. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://github.com/saivenkatachala" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/yaseena56/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/yaseena_56?igsh=MThqN2Q1aXp0YjJhNQ==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/yaseena34925" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Contact Form Submission
+const contactForm = document.getElementById('contact-form');
+const formResponse = document.getElementById('form-response');
+
+contactForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append('name', document.getElementById('name').value);
+  formData.append('email', document.getElementById('email').value);
+  formData.append('message', document.getElementById('message').value);
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxPc0DBXBY6zhYvk-LpaK3vZqZM-r8-Cgbdwjy9bY0mFFn4bKEhMi1_IXnF6C0O2oQM/exec';
+
+  formResponse.textContent = 'Sending message...';
+  formResponse.style.color = '#00bcd4';
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: formData, // Using FormData instead of JSON
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        formResponse.textContent = data.message || 'Message sent successfully!Thank you for contacting😇';
+        formResponse.style.color = '#4caf50';
+        contactForm.reset();
+      } else {
+        formResponse.textContent = data.message || 'Error sending message. Please try again.';
+        formResponse.style.color = '#f44336';
+      }
+    })
+    .catch(error => {
+      formResponse.textContent = 'Error sending message. Please try again.';
+      formResponse.style.color = '#f44336';
+      console.error('Error:', error);
+    });
+});
+// Add this to your existing JavaScript, inside the DOMContentLoaded event listener
+// Add this to your existing JavaScript, inside the DOMContentLoaded event listener
+
+// Simple and reliable flip card functionality
+const hobbyCards = document.querySelectorAll('.hobby-card');
+
+// Function to close all cards
+function closeAllCards() {
+  hobbyCards.forEach(card => {
+    card.classList.remove('flipped');
+  });
+}
+
+// Function to toggle specific card
+function toggleCard(card) {
+  if (card.classList.contains('flipped')) {
+    card.classList.remove('flipped');
+  } else {
+    // Close all other cards first
+    closeAllCards();
+    // Open this card
+    card.classList.add('flipped');
+    
+    // On mobile, scroll card into view
+    if (window.innerWidth <= 768) {
+      setTimeout(() => {
+        card.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'nearest'
+        });
+      }, 100);
+    }
+  }
+}
+
+// Add event listeners to cards
+hobbyCards.forEach(card => {
+  // Click on front side to flip
+  card.addEventListener('click', function(e) {
+    // Don't flip if clicking the close button
+    if (e.target.closest('.hobby-close-btn')) {
+      return;
+    }
+    
+    toggleCard(this);
+  });
+  
+  // Close button functionality
+  const closeBtn = card.querySelector('.hobby-close-btn');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.stopPropagation(); // Prevent card click event
+      card.classList.remove('flipped');
+    });
+  }
+});
+
+// Close cards when clicking outside (for mobile)
+document.addEventListener('click', function(e) {
+  // If clicked outside any hobby card, close all cards
+  if (!e.target.closest('.hobby-card')) {
+    closeAllCards();
+  }
+});
+
+// Close cards with Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' || e.key === 'Escape') {
+    closeAllCards();
+  }
+});
+
+// Handle window resize - reset cards on orientation change
+let resizeTimer;
+window.addEventListener('resize', function() {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function() {
+    // On mobile orientation change, close all cards
+    if (window.innerWidth <= 768) {
+      closeAllCards();
+    }
+  }, 150);
+});
+// Prevent card flipping on scroll for mobile
+let touchStartY = 0;
+let touchEndY = 0;
+
+hobbyCards.forEach(card => {
+  card.addEventListener('touchstart', function(e) {
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+  
+  card.addEventListener('touchend', function(e) {
+    touchEndY = e.changedTouches[0].screenY;
+    // Only flip if it's a tap (not a scroll)
+    if (Math.abs(touchEndY - touchStartY) < 10) {
+      toggleCard(this);
+    }
+  }, { passive: true });
+});
+
+// Add this to your existing JavaScript, inside the DOMContentLoaded event listener
+
+// Touch support for flip cards on mobile devices
+if ('ontouchstart' in window || navigator.maxTouchPoints) {
+  const hobbyCards = document.querySelectorAll('.hobby-card');
+  
+  hobbyCards.forEach(card => {
+    card.addEventListener('click', function() {
+      // Remove active class from all cards
+      hobbyCards.forEach(c => c.classList.remove('active'));
+      // Add active class to clicked card
+      this.classList.add('active');
+    });
+    
+    // Close card when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!card.contains(e.target)) {
+        card.classList.remove('active');
+      }
+    });
+  });
+}
+    document.addEventListener('DOMContentLoaded', function() {
+      // --- Mobile Menu Toggle ---
+      const mobileMenu = document.getElementById('mobile-menu');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (mobileMenu && navLinks) {
+          mobileMenu.addEventListener('click', () => {
+              navLinks.classList.toggle('active');
+              mobileMenu.classList.toggle('active');
+              
+              // Prevent body scroll when menu is open
+              if (navLinks.classList.contains('active')) {
+                  document.body.style.overflow = 'hidden';
+              } else {
+                  document.body.style.overflow = 'auto';
+              }
+          });
+          
+          // Close menu when clicking on a link
+          document.querySelectorAll('.nav-links a').forEach(link => {
+              link.addEventListener('click', () => {
+                  navLinks.classList.remove('active');
+                  mobileMenu.classList.remove('active');
+                  document.body.style.overflow = 'auto';
+              });
+          });
+          
+          // Close menu when clicking outside
+          document.addEventListener('click', (e) => {
+              if (!navLinks.contains(e.target) && !mobileMenu.contains(e.target) && navLinks.classList.contains('active')) {
+                  navLinks.classList.remove('active');
+                  mobileMenu.classList.remove('active');
+                  document.body.style.overflow = 'auto';
+              }
+          });
+      }
+
+      // --- Project Tabs ---
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const projectGrids = document.querySelectorAll('.projects-grid');
+      
+      tabButtons.forEach(button => {
+          button.addEventListener('click', () => {
+              tabButtons.forEach(btn => btn.classList.remove('active'));
+              projectGrids.forEach(grid => grid.classList.remove('active'));
+              button.classList.add('active');
+              const targetId = button.getAttribute('data-target');
+              const targetGrid = document.getElementById(targetId);
+              if (targetGrid) {
+                  targetGrid.classList.add('active');
+              }
+          });
+      });
+      
+      // Ensure academic projects grid is active by default
+      const academicGrid = document.getElementById('academic-projects');
+      if (academicGrid && !academicGrid.classList.contains('active')) {
+          academicGrid.classList.add('active');
+      }
+
+      // --- Slider Logic ---
+      const slider = document.querySelector('.profile-slider');
+      const slides = document.querySelectorAll('.profile-slide');
+      const indicators = document.querySelectorAll('.profile-slider-indicator');
+      const prevBtn = document.querySelector('.profile-slider-nav.prev');
+      const nextBtn = document.querySelector('.profile-slider-nav.next');
+      
+      let currentSlide = 0;
+      let slideInterval;
+      const slideIntervalTime = 5000; // 5 seconds
+
+      function showSlide(index, direction = 'next') {
+          slides.forEach(slide => {
+              slide.classList.remove('active');
+              slide.removeAttribute('data-direction');
+          });
+          
+          indicators.forEach(indicator => indicator.classList.remove('active'));
+          
+          // Handle wrap-around
+          if (index >= slides.length) {
+              currentSlide = 0;
+          } else if (index < 0) {
+              currentSlide = slides.length - 1;
+          } else {
+              currentSlide = index;
+          }
+          
+          slides[currentSlide].classList.add('active');
+          slides[currentSlide].setAttribute('data-direction', direction);
+          indicators[currentSlide].classList.add('active');
+      }
+
+      function nextSlide() {
+          showSlide(currentSlide + 1, 'next');
+      }
+
+      function prevSlide() {
+          showSlide(currentSlide - 1, 'prev');
+      }
+
+      function startAutoSlide() {
+          slideInterval = setInterval(nextSlide, slideIntervalTime);
+      }
+
+      function stopAutoSlide() {
+          clearInterval(slideInterval);
+      }
+
+      if (nextBtn) {
+          nextBtn.addEventListener('click', () => {
+              nextSlide();
+              stopAutoSlide();
+              startAutoSlide();
+          });
+      }
+
+      if (prevBtn) {
+          prevBtn.addEventListener('click', () => {
+              prevSlide();
+              stopAutoSlide();
+              startAutoSlide();
+          });
+      }
+
+      indicators.forEach((indicator, index) => {
+          indicator.addEventListener('click', () => {
+              const direction = index > currentSlide ? 'next' : 'prev';
+              showSlide(index, direction);
+              stopAutoSlide();
+              startAutoSlide();
+          });
+      });
+
+      if (slider) {
+          slider.addEventListener('mouseenter', stopAutoSlide);
+          slider.addEventListener('mouseleave', startAutoSlide);
+          
+          slider.addEventListener('touchstart', stopAutoSlide);
+          slider.addEventListener('touchend', () => {
+              setTimeout(startAutoSlide, 3000);
+          });
+      }
+
+      showSlide(0);
+      startAutoSlide();
+
+      // --- Nav Scroll Effect ---
+      window.addEventListener('scroll', function() {
+          const nav = document.querySelector('nav');
+          if (window.scrollY > 50) {
+              nav.classList.add('scrolled');
+          } else {
+              nav.classList.remove('scrolled');
+          }
+      });
+
+      // --- Smooth Scrolling ---
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+              e.preventDefault();
+              const targetId = this.getAttribute('href');
+              if (targetId === '#') return;
+              
+              const targetElement = document.querySelector(targetId);
+              if (targetElement) {
+                  window.scrollTo({
+                      top: targetElement.offsetTop - 80,
+                      behavior: 'smooth'
+                  });
+              }
+          });
+      });
+
+    });
+  </script>
+</body>
+</html>
