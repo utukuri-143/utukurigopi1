@@ -3,234 +3,693 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yaseena - Portfolio</title>
+  <title>UTUKURI GOPI - Portfolio</title>
   <link rel="icon" href="12.png">
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="gopi.css">
+</head>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenu = document.getElementById('mobile-menu');
-    const navLinks = document.querySelector('.nav-links');
-
-    // Toggle menu
-    if (mobileMenu && navLinks) {
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-        });
-
-        // Close menu when a link is clicked
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileMenu.classList.remove('active');
-            });
-        });
+  // ===== INDIVIDUAL PAGE TURN CARDS =====
+document.addEventListener('DOMContentLoaded', function() {
+  const pageTurnBooks = document.querySelectorAll('.page-turn-book');
+  const closeButtons = document.querySelectorAll('.close-page');
+  const prevButtons = document.querySelectorAll('.prev-page-btn');
+  
+  // Function to flip page (open details)
+  function flipPage(book) {
+    book.classList.add('flipped');
+    updatePageIndicator(book, 2);
+  }
+  
+  // Function to close page (back to cover)
+  function closePage(book) {
+    book.classList.remove('flipped');
+    updatePageIndicator(book, 1);
+  }
+  
+  // Function to update page indicator
+  function updatePageIndicator(book, pageNumber) {
+    const currentPageSpan = book.querySelector('.current-page');
+    if (currentPageSpan) {
+      currentPageSpan.textContent = pageNumber;
     }
+  }
+  
+  // Event listeners for each book
+  pageTurnBooks.forEach(book => {
+    // Click on cover page to flip
+    const coverPage = book.querySelector('.cover-page');
+    if (coverPage) {
+      coverPage.addEventListener('click', (e) => {
+        if (!e.target.closest('.close-page') && 
+            !e.target.closest('.page-nav-btn')) {
+          flipPage(book);
+        }
+      });
+    }
+    
+    // Touch support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const swipeThreshold = 50;
+    
+    book.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    book.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const swipeDistance = touchEndX - touchStartX;
+      
+      if (Math.abs(swipeDistance) > swipeThreshold) {
+        if (swipeDistance < 0 && !book.classList.contains('flipped')) {
+          // Swipe left to open page
+          flipPage(book);
+        } else if (swipeDistance > 0 && book.classList.contains('flipped')) {
+          // Swipe right to close page
+          closePage(book);
+        }
+      }
+    });
+  });
+  
+  // Event listeners for close buttons
+  closeButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const book = button.closest('.page-turn-book');
+      if (book) {
+        closePage(book);
+      }
+    });
+  });
+  
+  // Event listeners for previous buttons
+  prevButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const book = button.closest('.page-turn-book');
+      if (book) {
+        closePage(book);
+      }
+    });
+  });
+  
+  // Keyboard support
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      // Close all open pages with Escape key
+      pageTurnBooks.forEach(book => {
+        if (book.classList.contains('flipped')) {
+          closePage(book);
+        }
+      });
+    }
+  });
+  
+  // Close page when clicking outside on mobile
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+      const openBook = document.querySelector('.page-turn-book.flipped');
+      if (openBook && !openBook.contains(e.target) && 
+          !e.target.classList.contains('page-nav-btn')) {
+        closePage(openBook);
+      }
+    }
+  });
+  
+  // Mouse hover effect for desktop
+  pageTurnBooks.forEach(book => {
+    book.addEventListener('mouseenter', () => {
+      if (!book.classList.contains('flipped')) {
+        const hint = book.querySelector('.page-turn-hint');
+        if (hint) {
+          hint.style.animation = 'hintPulse 1s ease-in-out';
+        }
+      }
+    });
+  });
+  
+  // Initialize page indicators
+  pageTurnBooks.forEach(book => {
+    updatePageIndicator(book, 1);
+  });
+});
+</script>
 
-    // Optional: Hide/Show Project Tabs Logic (if you need the tabs to function)
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const projectGrids = document.querySelectorAll('.projects-grid');
+<script>
+  // ===== SIMPLE CIRCULAR SKILLS =====
+document.addEventListener('DOMContentLoaded', function() {
+  // Skill data - IMAGE PATHS ONLY
+  const skillsData = {
+    technical: [
+      "ArcGIS_globe.png",
+      "QGIS_logo_new.svg.png", 
+      "globalmap.png",
+      "Google Earth.png",
+      "pro.png",
+      "sql.png",
+      "excel.png"
+    ],
+    soft: [
+      "tb.png",
+      "rw.png",
+      "adapat.png",
+      "at.png",
+      "ps.png",
+      "pre.png"
+  ]
+  };
 
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove 'active' from all buttons and grids
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            projectGrids.forEach(grid => grid.classList.remove('active'));
 
-            // Add 'active' to the clicked button and its corresponding grid
-            button.classList.add('active');
-            const targetId = button.getAttribute('data-target');
-            const targetGrid = document.getElementById(targetId);
-            if (targetGrid) {
-                targetGrid.classList.add('active');
+  // DOM elements
+  const techBtn = document.getElementById('tech-btn');
+  const softBtn = document.getElementById('soft-btn');
+  const techCircle = document.getElementById('tech-circle');
+  const softCircle = document.getElementById('soft-circle');
+  
+  // Function to arrange icons in a perfect circle
+  function arrangeInCircle(imagePaths, container) {
+    // Clear existing dots
+    const existingDots = container.querySelectorAll('.skill-dot');
+    existingDots.forEach(dot => dot.remove());
+    
+    const radius = 130; // Distance from center
+    const centerX = container.offsetWidth / 2;
+    const centerY = container.offsetHeight / 2;
+    const total = imagePaths.length;
+    
+    // Calculate positions
+    imagePaths.forEach((imgPath, index) => {
+      // Calculate angle for this item
+      const angle = (index / total) * Math.PI * 2;
+      
+      // Calculate position
+      const x = centerX + radius * Math.cos(angle) - 30; // 30 = half of dot size
+      const y = centerY + radius * Math.sin(angle) - 30;
+      
+      // Create skill dot
+      const dot = document.createElement('div');
+      dot.className = 'skill-dot';
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+      dot.innerHTML = `<img src="${imgPath}" alt="">`;
+      
+      // Add to container
+      container.appendChild(dot);
+      
+      // Animate in with delay
+      setTimeout(() => {
+        dot.classList.add('active');
+      }, 50 + index * 50);
+    });
+  }
+  
+  // Function to show specific skills circle
+  function showSkills(type) {
+    // Update buttons
+    techBtn.classList.remove('active');
+    softBtn.classList.remove('active');
+    
+    // Hide both circles
+    techCircle.classList.remove('active');
+    softCircle.classList.remove('active');
+    
+    // Show selected circle
+    setTimeout(() => {
+      if (type === 'technical') {
+        techBtn.classList.add('active');
+        techCircle.classList.add('active');
+        
+        // Arrange technical skills
+        arrangeInCircle(skillsData.technical, techCircle);
+      } else {
+        softBtn.classList.add('active');
+        softCircle.classList.add('active');
+        
+        // Arrange soft skills
+        arrangeInCircle(skillsData.soft, softCircle);
+      }
+    }, 100);
+  }
+  
+  // Initialize with technical skills
+  showSkills('technical');
+  
+  // Button event listeners
+  techBtn.addEventListener('click', () => showSkills('technical'));
+  softBtn.addEventListener('click', () => showSkills('soft'));
+  
+  // Handle window resize
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (techCircle.classList.contains('active')) {
+        arrangeInCircle(skillsData.technical, techCircle);
+      } else {
+        arrangeInCircle(skillsData.soft, softCircle);
+      }
+    }, 200);
+  });
+});
+</script>
+<script>
+  // ===== CENTER SINGLE CARDS DYNAMICALLY =====
+function centerSingleCards() {
+    // All section grids that might have single cards
+    const gridSelectors = [
+        '.certificates-grid',
+        '.projects-grid', 
+        '.conferences-grid',
+        '.education-grid',
+        '.field-survey-grid',
+        '.volunteer-grid',
+        '.publications-grid',
+        '.experience-grid',
+        '.internships-grid'
+    ];
+    
+    gridSelectors.forEach(selector => {
+        const grids = document.querySelectorAll(selector);
+        grids.forEach(grid => {
+            // Count direct child cards (excluding text nodes)
+            const childCards = Array.from(grid.children).filter(child => 
+                child.nodeType === 1 && 
+                (child.classList.contains('certificate-card') ||
+                 child.classList.contains('project-card') ||
+                 child.classList.contains('conference-card') ||
+                 child.classList.contains('education-card') ||
+                 child.classList.contains('field-survey-card') ||
+                 child.classList.contains('volunteer-card') ||
+                 child.classList.contains('publication-card') ||
+                 child.classList.contains('experience-card') ||
+                 child.classList.contains('internship-card'))
+            );
+            
+            if (childCards.length === 1) {
+                grid.classList.add('single-card-center');
+                grid.style.display = 'flex';
+                grid.style.justifyContent = 'center';
+                grid.style.flexWrap = 'wrap';
+                grid.style.maxWidth = '600px';
+                grid.style.margin = '0 auto';
+                
+                // Center the single card
+                childCards[0].style.maxWidth = '500px';
+                childCards[0].style.width = '100%';
             }
         });
     });
+}
 
-    // Ensure the Academic Projects tab is active on load (based on your HTML setup)
-    const academicGrid = document.getElementById('academic-projects');
-    if (academicGrid && !academicGrid.classList.contains('active')) {
-        academicGrid.classList.add('active');
-    }
+// ===== APPLY TEXT JUSTIFICATION =====
+function applyTextJustification() {
+    // Select all paragraph elements inside cards
+    const cardParagraphs = document.querySelectorAll(`
+        .certificate-card p,
+        .project-card p,
+        .conference-card p,
+        .education-card p,
+        .field-survey-card p,
+        .publication-card p,
+        .publication-card p,
+        .experience-card p,
+        .internship-card p,
+        .about-text-container p,
+        .content-body p,
+        .hobby-card-back p
+    `);
+    
+    cardParagraphs.forEach(p => {
+        p.style.textAlign = 'justify';
+        p.style.textJustify = 'inter-word';
+        p.style.hyphens = 'auto';
+        p.style.lineHeight = '1.6';
+        p.style.wordSpacing = '0.05em';
+        p.style.letterSpacing = '0.01em';
+    });
+}
+
+// Run on DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    centerSingleCards();
+    applyTextJustification();
+    
+    // Re-run on window resize
+    window.addEventListener('resize', centerSingleCards);
 });
 </script>
-</head>
+<script>// ===== FIELD SURVEY CARDS SLIDE EFFECT =====
+// ===== FIELD SURVEY CARDS - SIMPLE SLIDE EFFECT =====
+function initFieldSurveyCards() {
+  const fieldSurveyCards = document.querySelectorAll('.field-survey-card');
+  
+  fieldSurveyCards.forEach(card => {
+    // Open card on click (anywhere on the card)
+    card.addEventListener('click', function(e) {
+      // Check if we're not clicking the close button on back side
+      if (!e.target.closest('.back-close') && 
+          !e.target.classList.contains('back-close')) {
+        this.classList.add('active');
+      }
+    });
+    
+    // Close card when clicking the X on back side
+    const closeBtn = card.querySelector('.back-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        card.classList.remove('active');
+      });
+    }
+  });
+  
+  // Close all cards when clicking outside (desktop)
+  document.addEventListener('click', function(e) {
+    if (window.innerWidth > 768) {
+      if (!e.target.closest('.field-survey-card')) {
+        fieldSurveyCards.forEach(card => {
+          card.classList.remove('active');
+        });
+      }
+    }
+  });
+  
+  // Close with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      fieldSurveyCards.forEach(card => {
+        card.classList.remove('active');
+      });
+    }
+  });
+}
 
-<body>
-  <!-- Navigation Bar -->
- <nav>
-    <div class="container nav-container">
-        <h1 class="logo"><i class="fa-solid fa-user-tie"></i> Portfolio</h1>
-        <ul class="nav-links">
-            <li><a href="#home"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a></li>
-            <li><a href="#projects"><i class="fa-solid fa-laptop-code"></i> Projects</a></li>
-            <li><a href="#skills"><i class="fa-solid fa-lightbulb"></i> Skills</a></li>
-            <li><a href="#certificates"><i class="fa-solid fa-certificate"></i> Certificates</a></li>
-            <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact Me</a></li>
-        </ul>
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  initFieldSurveyCards();
+});
+
+</script>
+<script>
+  // ===== ABOUT ME STACKED IMAGES WITH TEXT CHANGES =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Content data for each image
+    const contentData = {
+        content1: {
+            title: "GIS ANALIST",
+            icon: "fas fa-code",
+            content: `<p>Bridging Environmental Science & Geospatial Technology. I am an M.Sc. Environmental Scientist and GIS Analyst dedicated to solving complex environmental challenges through spatial intelligence. With a focus on water treatment research and satellite-driven analytics, I transform raw data into actionable insights using ArcGIS, QGIS. Whether it’s calculating Land Surface Temperature or designing precise urban maps, I specialize in high-impact modeling that improves project accuracy and efficiency.</p>`
+        },
+       content2: {
+             title: "International Publications",
+             icon: "fas fa-microscope",
+             content: `<p>Co-authored two peer-reviewed research papers in international journals focusing on <b>wastewater treatment</b> and <b>pollutant degradation</b>.</p>
+              <p>Key achievements include optimizing catalytic oxidation processes to reach a <b>95% reduction in COD</b> for complex contaminants.</p>
+              <p>Published in the <i>Journal of Applied Electrochemistry</i> and <i>Journal of Environmental Quality Management</i>.</p>`
+},
+        content3: {
+            title: "Geospatial Project Atlas",
+             icon: "fas fa-map-marked-alt",
+             content: `<p>Developed a comprehensive A3-sized Atlas with 20 primary maps and 100+ thematic layers.</p>
+              <p>Executed advanced analysis including <b>3D visualization, flood modeling, and hydrology</b> using ArcGIS and QGIS.</p>
+              <p>Integrated multi-source data such as Cadastral maps, Toposheets, and satellite imagery for urban environmental monitoring.</p>`
+},
+    };
+
+    // Get DOM elements
+    const stackedImages = document.querySelectorAll('.stacked-image');
+    const contentTitle = document.getElementById('contentTitle');
+    const contentBody = document.getElementById('contentBody');
+    const contentIcon = document.querySelector('.content-icon i');
+    const selectorDots = document.querySelectorAll('.selector-dot');
+
+    // Function to activate an image and show its content
+    function activateItem(itemIndex) {
+        // Remove active class from all items and dots
+        stackedImages.forEach(item => item.classList.remove('active'));
+        selectorDots.forEach(dot => dot.classList.remove('active'));
         
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-    </div>
-</nav>
+        // Add active class to selected item and dot
+        const selectedItem = stackedImages[itemIndex];
+        selectedItem.classList.add('active');
+        selectorDots[itemIndex].classList.add('active');
+        
+        // Update content with the selected item's data
+        const contentId = selectedItem.getAttribute('data-content');
+        const data = contentData[contentId];
+        
+        contentTitle.textContent = data.title;
+        contentBody.innerHTML = data.content;
+        contentIcon.className = data.icon;
+        
+        // Add animation
+        contentTitle.style.animation = 'none';
+        contentBody.style.animation = 'none';
+        setTimeout(() => {
+            contentTitle.style.animation = 'fadeInRight 0.6s ease-out';
+            contentBody.style.animation = 'fadeInRight 0.6s ease-out';
+        }, 10);
+    }
 
+    // Add click events to stack images
+    stackedImages.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            activateItem(index);
+        });
+    });
+
+    // Add click events to selector dots
+    selectorDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            activateItem(index);
+        });
+    });
+
+    // Initialize with first content
+    activateItem(0);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        const activeIndex = Array.from(stackedImages).findIndex(item => item.classList.contains('active'));
+        
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            const nextIndex = (activeIndex + 1) % stackedImages.length;
+            activateItem(nextIndex);
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            const prevIndex = (activeIndex - 1 + stackedImages.length) % stackedImages.length;
+            activateItem(prevIndex);
+        } else if (e.key >= '1' && e.key <= '3') {
+            e.preventDefault();
+            const index = parseInt(e.key) - 1;
+            activateItem(index);
+        }
+    });
+
+    // Auto-rotate images every 5 seconds
+    let rotationInterval;
+    
+    function startAutoRotate() {
+        rotationInterval = setInterval(() => {
+            const activeIndex = Array.from(stackedImages).findIndex(item => item.classList.contains('active'));
+            const nextIndex = (activeIndex + 1) % stackedImages.length;
+            activateItem(nextIndex);
+        }, 5000);
+    }
+    
+    function stopAutoRotate() {
+        clearInterval(rotationInterval);
+    }
+    
+    // Start auto rotation
+    startAutoRotate();
+    
+    // Stop on user interaction
+    stackedImages.forEach(item => {
+        item.addEventListener('mouseenter', stopAutoRotate);
+        item.addEventListener('click', stopAutoRotate);
+    });
+    
+    selectorDots.forEach(dot => {
+        dot.addEventListener('click', stopAutoRotate);
+    });
+    
+    // Restart after 10 seconds of inactivity
+    let inactivityTimer;
+    
+    function resetInactivityTimer() {
+        clearTimeout(inactivityTimer);
+        clearInterval(rotationInterval);
+        inactivityTimer = setTimeout(() => {
+            startAutoRotate();
+        }, 10000);
+    }
+    
+    // Reset timer on user interaction
+    document.addEventListener('click', resetInactivityTimer);
+    document.addEventListener('keydown', resetInactivityTimer);
+});
+</script>
+<body>
+<!-- Navigation Bar -->
+<nav>
+  <div class="container nav-container">
+      <h1 class="logo"><i class="fa-solid fa-user-tie"></i> Portfolio</h1>
+      <ul class="nav-links">
+          <li><a href="#home"><i class="fa-solid fa-house"></i> Home</a></li>
+          
+          <!-- Academics Dropdown -->
+          <li class="dropdown">
+              <a href="#academics" class="dropdown-toggle">
+                  <i class="fa-solid fa-graduation-cap"></i> Academics 
+                  <i class="fas fa-chevron-down dropdown-arrow"></i>
+              </a>
+              <ul class="dropdown-menu">
+                  <li><a href="#education"><i class="fa-solid fa-book"></i> Education</a></li>
+                  <li><a href="#projects"><i class="fa-solid fa-laptop-code"></i> Projects</a></li>
+                  <li><a href="#conferences"><i class="fa-solid fa-chalkboard-user"></i> Conferences</a></li>
+                  <li><a href="#certificates"><i class="fa-solid fa-certificate"></i> Certificates</a></li>
+                  <li><a href="#field-survey"><i class="fa-solid fa-map-marked-alt"></i> Field Visit</a></li>
+                  <li><a href="#intern"><i class="fa-solid fa-briefcase"></i> Internships</a></li>
+                  <li><a href="#publications"><i class="fa-solid fa-hands-helping"></i>Publications</a></li>
+              </ul>
+          </li>
+          
+          <li><a href="#experience"><i class="fa-solid fa-briefcase"></i> Experience</a></li>
+          <li><a href="#skills"><i class="fa-solid fa-lightbulb"></i> Skills</a></li>
+          <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+      </ul>
+      
+      <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+      </button>
+  </div>
+</nav>
 
   <!-- Home Section -->
   <section id="home" class="home-section">
     <div class="container">
       <div class="home-content">
         <div class="home-text">
-          <h1>YASEENA</h1>
-          <p>Data Science Specialist | Machine Learning Enthusiast | Computer Science Engineer</p>
+          <h1>UTUKURI GOPI</h1>
+          <p>GIS Analyst | Environmental Science| Passionate research enthusiast in Ecology and Environment</p>
           <div class="home-buttons">
-            <a href="#about" class="btn btn-primary">More <i class="fas fa-arrow-right"></i></a>
-            <a href="A_SAI_VENKAT_RESUME_2025.pdf" download class="btn btn-download"><i class="fas fa-download"></i> Download CV</a>
+            <a href="#conferences" class="btn btn-primary">More <i class="fas fa-arrow-right"></i></a>
+            <a href="UTUKURI GOPI(GIS ANALYST).pdf" download class="btn btn-download"><i class="fas fa-download"></i> Download CV</a>
           </div>
         </div>
         <div class="home-image">
-          <img src="sainew.jpg" alt="SAI VENKAT">
+          <img src="dsj.jpeg" alt="Yaseena Shaik">
         </div>
       </div>
     </div>
   </section>
 
+ 
 
+ <!-- ===== ABOUT ME SECTION WITH SQUARE STACKED IMAGES ===== -->
+<section id="about" class="about-section">
+  <div class="container">
+    <h2 class="section-title">About Me</h2>
+    
+    <div class="about-content" style="background-color: #dedbd2;">
+      <!-- Left side - Square Stacked Images -->
+      <div class="image-stack-container">
+        <!-- Image 1 -->
+        <div class="stacked-image active" data-content="content1">
+          <div class="image-number">1</div>
+          <img src="GIS.jpg" alt="GIS">
+          <div class="image-overlay">
+            <div class="stack-title">GIS </div>
+          </div>
+        </div>
 
-  <!-- Profile Slider Section -->
-  <section class="profile-slider-section">
-    <div class="profile-slider-container">
-      <h2 class="profile-slider-title">My Profile</h2>
-      
-      <div class="profile-slider">
-        <button class="profile-slider-nav prev">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        
-        <div class="profile-slide active">
-          <div class="profile-slide-content">
-            <div class="profile-slide-image">
-              <img src="sainew.jpg" alt="SAI VENKAT">
-            </div>
-            <div class="profile-slide-text">
-              <h3>Data Science Specialist</h3>
-              <p>Passionate about leveraging machine learning and data analysis to solve complex problems. With a strong foundation in computer science and engineering, I specialize in developing innovative solutions that drive business success.</p>
-              <div class="profile-slide-stats">
-                <div class="profile-stat">
-                  <div class="profile-stat-value">9.36</div>
-                  <div class="profile-stat-label">CGPA</div>
-                </div>
-                <div class="profile-stat">
-                  <div class="profile-stat-value">4+</div>
-                  <div class="profile-stat-label">Certifications</div>
-                </div>
-                <div class="profile-stat">
-                  <div class="profile-stat-value">10+</div>
-                  <div class="profile-stat-label">Projects</div>
-                </div>
-              </div>
-            </div>
+        <!-- Image 2 -->
+        <div class="stacked-image" data-content="content2">
+          <div class="image-number">2</div>
+          <img src="reserach lab (1).jpg" alt="Photography">
+          <div class="image-overlay">
+            <div class="stack-title">Research Publications</div>
           </div>
         </div>
-        
-        <div class="profile-slide">
-          <div class="profile-slide-content">
-            <div class="profile-slide-image">
-              <img src="sainew.jpg" alt="SAI VENKAT">
-            </div>
-            <div class="profile-slide-text">
-              <h3>Technical Skills</h3>
-              <p>Proficient in a wide range of technologies including Java, Spring Boot, React JS, MySQL, and AWS cloud services. Experienced in full-stack development and data analytics with a focus on creating scalable and efficient solutions.</p>
-              <div class="profile-slide-stats">
-                <div class="profile-stat">
-                  <div class="profile-stat-value">8+</div>
-                  <div class="profile-stat-label">Languages</div>
-                </div>
-                <div class="profile-stat">
-                  <div class="profile-stat-value">5+</div>
-                  <div class="profile-stat-label">Frameworks</div>
-                </div>
-                <div class="profile-stat">
-                  <div class="profile-stat-value">3</div>
-                  <div class="profile-stat-label">Databases</div>
-                </div>
-              </div>
-            </div>
+
+        <!-- Image 3 -->
+        <div class="stacked-image" data-content="content3">
+          <div class="image-number">3</div>
+          <img src="atlas.jpg" alt="Travel">
+          <div class="image-overlay">
+            <div class="stack-title">Atlas</div>
           </div>
         </div>
-        
-        <div class="profile-slide">
-          <div class="profile-slide-content">
-            <div class="profile-slide-image">
-              <img src="sainew.jpg" alt="SAI VENKAT">
-            </div>
-            <div class="profile-slide-text">
-              <h3>Achievements</h3>
-              <p>Published research in Scopus on machine learning applications in e-commerce. Certified in AWS Solutions Architecture and Red Hat Enterprise Application Development. Consistently maintaining academic excellence with a CGPA of 9.36.</p>
-              <div class="profile-slide-stats">
-                <div class="profile-stat">
-                  <div class="profile-stat-value">1</div>
-                  <div class="profile-stat-label">Research Paper</div>
-                </div>
-                <div class="profile-stat">
-                  <div class="profile-stat-value">2</div>
-                  <div class="profile-stat-label">Internships</div>
-                </div>
-                <div class="profile-stat">
-                  <div class="profile-stat-value">3</div>
-                  <div class="profile-stat-label">AWS Certs</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <button class="profile-slider-nav next">
-          <i class="fas fa-chevron-right"></i>
-        </button>
       </div>
       
-      <div class="profile-slider-indicators">
-        <div class="profile-slider-indicator active"></div>
-        <div class="profile-slider-indicator"></div>
-        <div class="profile-slider-indicator"></div>
+      <!-- Right side - Text Content -->
+      <div class="about-text-container">
+        <div class="content-icon">
+          <i class="fas fa-code"></i>
+        </div>
+        <div class="content-header">
+          <h2 class="content-title" id="contentTitle"></h2>
+        </div>
+        <div class="content-body" id="contentBody">
+          <P></P>
+        </div>
+        
+        <div class="image-selector">
+          <div class="selector-dot active" data-index="0"></div>
+          <div class="selector-dot" data-index="1"></div>
+          <div class="selector-dot" data-index="2"></div>
+        </div>
       </div>
     </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="about-section">
-    <div class="container">
-      <h1>Career Objective</h1>
-      <p>Seeking a challenging role as a Data Science Specialist where I can leverage my expertise in machine learning, data analysis, and computer science engineering to contribute innovative solutions and drive success in a forward-thinking organization.</p>
-    </div>
-  </section>
-
+  </div>
+</section>
   <!-- Education Section -->
+ <!-- Education Section -->
   <section id="education" class="education-section">
     <div class="container">
       <h2>Education</h2>
       <div class="education-grid">
-        <div class="education-card">
-          <i class="fas fa-graduation-cap"></i>
-          <h3>KL UNIVERSITY, BTech in Computer Science and Engineering</h3>
-          <p>CGPA: 9.36 | 2021 – 2025</p>
+        <div class="education-card" style="background-color: #f1f0eb;">
+          <img src="cuk.png" class="cert-image" alt="Post Graduation">
+        </br>
+          <h4 style="font-size:18px;font-weight:600;padding:6px 14px;border-radius:12px;color:#6a040f;display:inline-block;">Post Graduation</h4>
+          <h3>Central University of Kerala</h3>
+          <h3>M.Sc Environmental Sciences</h3>
+          <p>CGPA: 7.40 | 2021 – 2023</p>
         </div>
-        <div class="education-card">
-          <i class="fas fa-school"></i>
-          <h3>Mangal Vidyalayam, Central Board of Secondary Education (PCM)</h3>
-          <p>Percentage: 78% | 2019 – 2021</p>
+        <div class="education-card" style="background-color: #f1f0eb;">
+          <img src="de.png" class="cert-image" alt="Graduation">
+        </br>
+          <h4 style="font-size:18px;font-weight:600;padding:6px 14px;border-radius:12px;color:#6a040f;display:inline-block;">Graduation</h4>
+          <h3>kakatiya University</h3>
+          <h4>SR& BGNR ARTS AND SCIENCE COLLEGE(AUTONOMUS)-KHAMMAM</h4>
+          <h3>B.Sc M.P.CS</h3>
+          <p>CGPA:7.72 | 2017 – 2021</p>
         </div>
-        <div class="education-card">
-          <i class="fas fa-school"></i>
-          <h3>Mangal Vidyalayam, Central Board of Secondary Education</h3>
-          <p>Percentage: 78% | 2018 – 2019</p>
+        <div class="education-card" style="background-color: #f1f0eb;">
+          <img src="tf.png" class="cert-image" alt="intermediate ">
+          <h4 style="font-size:18px;font-weight:600;padding:6px 14px;border-radius:12px;color:#6a040f;display:inline-block;">Higher Secondary Education </h4>
+          <h3>Grace jr college- Thanikella,khammam </h3>
+          <h3>MPC</h3>
+          <p>75.3%| 2015 – 2017</p>
+        </div>
+        <div class="education-card" style="background-color: #f1f0eb;">
+          <img src="tf.png" class="cert-image" alt="SSC">
+          <h4 style="font-size:18px;font-weight:600;padding:6px 14px;border-radius:12px;color:#6a040f;display:inline-block;">Secondary School Education </h4>
+          <h3>TS Residential school(Boys)- Enkoor,khammam</h3>
+          <p>CGPA: 8.5| 2014 – 2015</p>
         </div>
       </div>
     </div>
@@ -241,254 +700,1249 @@
   <div class="container">
     <h2>Projects</h2>
     
-    <!-- Tabs for Academic and Basic Projects -->
-    <div class="project-tabs">
-      <button class="tab-btn active" data-target="academic-projects">Academic Projects</button>
-      <button class="tab-btn" data-target="basic-projects">Projects</button>
+    <!-- Projects Grid with Individual Page Turn Cards -->
+    <div class="projects-page-grid">
+      <!-- Project 1 -->
+      <div class="project-page-card">
+        <!-- Page Turn Book for Project 1 -->
+        <div class="page-turn-book" data-project="1">
+          <!-- Cover Page (Title with Background) -->
+          <div class="page cover-page active" style="background-image: linear-gradient(rgba(186, 240, 240, 0.8), rgba(250, 224, 209, 0.9)), url(leafearthlogo.png);">
+            <div class="page-content">
+              <div class="project-badge">01</div>
+              <div class="page-icon">
+                <!-- <i class="fas fa-star"></i> -->
+              </div>
+              <h3>Optimization of variables for the degradation of progesterone from water using photoelectrocatalytic oxidation process</h3>
+              
+              <div class="page-turn-hint">
+                <i class="fas fa-hand-point-right"></i>
+                <span>Click to turn page</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Content Page (Explanation) -->
+          <div class="page content-page" style="background-color: #dedbd2;">
+            <div class="page-content">
+              <button class="close-page" aria-label="Close page">
+                <i class="fas fa-times"></i>
+              </button>
+              
+              <div class="content-header">
+                <h3><i class="fas fa-calendar-alt"></i> Abstract</h3>
+                <span class="project-category">Research paper</span>
+              </div>
+              
+              <div class="content-body">
+                <p>This thesis is a comparitive study of  advanced oxidation process technologies, Electrochemical oxidation for the degradation of an emerging contaminant esomeprazole in water.This study evaluates the feasibility of using Chemical oxygen demand (COD) and UV visible spectroscopy as environmental monitoring techniques for the study.</p>
+       
+              </div>
+              
+              <div class="page-nav-buttons">
+                <button class="page-nav-btn prev-page-btn">
+                  <i class="fas fa-chevron-left"></i> Back
+                </button>
+                <div class="page-indicator">
+                  <span class="current-page">1</span>/<span class="total-pages">2</span>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Page Corner for Visual Effect -->
+          <div class="page-corner"></div>
+        </div>
+      </div>
+      
+      <!-- Project 2 -->
+      <div class="project-page-card">
+        <!-- Page Turn Book for Project 2 -->
+        <div class="page-turn-book" data-project="2">
+          <!-- Cover Page (Title with Background) -->
+          <div class="page cover-page active" style="background-image: linear-gradient(rgba(246, 248, 248, 0.8), rgba(168, 164, 162, 0.9)), url(lab.jpg)">
+            <div class="page-content">
+              <div class="project-badge">02</div>
+              <div class="page-icon">
+              </div>
+              <h3>Anodic oxidation of esomeprazole in water by carbon coated titanium (C/Ti) electrode: Optimization and degradation analysis</h3>
+            
+              <div class="page-turn-hint">
+                <i class="fas fa-hand-point-right"></i>
+                <span>Click to turn page</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Content Page (Explanation) -->
+          <div class="page content-page" style="background-color:#dedbd2;">
+            <div class="page-content">
+              <button class="close-page" aria-label="Close page">
+                <i class="fas fa-times"></i>
+              </button>
+              
+              <div class="content-header">
+                <h3><i class="fas fa-calendar-alt"></i> Abstract</h3>
+                <span class="project-category">Thesis</span> 
+              
+              </div>
+              
+              <div class="content-body">
+                <p>This thesis is a comparitive study of two Advanced oxidation process technologies,Electrochemical oxidation and Ozonation for the degradation of an emerging contaminant Propylparaben in water.</p>
+                <div class="project-features">
+                  <h4><i class="fas fa-list-check"></i> Major objectives:</h4>
+                  <ul style="text-align: justify;">
+  <li>To degrade esomeprazole  in water using Electrochemical oxidation and Ozonation process</li>
+  <li>To assess graphite sheet as an electrode material for Electrochemical oxidation process</li>
+  <li>To optimize the variables such as pH and treatment time for electrochemical oxidation process</li>
+  <li>To compare the efficiencies of Electrochemical degradation at optimal conditions</li>
+  <li>Environmental techniques used:</li>
+</ul>
+
+                </div>
+                
+                <div class="tech-tags">
+                  <span class="tech-tag">COD</span>
+                  <span class="tech-tag">UV Visible spectroscopy</span>
+                </div>
+              </div>
+              
+              <div class="page-nav-buttons">
+                <button class="page-nav-btn prev-page-btn">
+                  <i class="fas fa-chevron-left"></i> Back
+                </button>
+                <div class="page-indicator">
+                  <span class="current-page">1</span>/<span class="total-pages">2</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Page Corner for Visual Effect -->
+          <div class="page-corner"></div>
+        </div>
+      </div>
+      
+      <!-- Project 3 -->
+     <!-- Project 3 -->
+      <div class="project-page-card">
+        <!-- Page Turn Book for Project 3 -->
+        <div class="page-turn-book" data-project="3">
+          <!-- Cover Page (Title with Background) -->
+          <div class="page cover-page active" style="background-image: linear-gradient(rgba(245, 243, 243, 0.8), rgba(145, 143, 142, 0.9)), url('phytochem.jpg');">
+            <div class="page-content">
+              <div class="project-badge">03</div>
+              <div class="page-icon">
+                
+              </div>
+              <h3>Atlas preparation <span class="zodiac"</span></p>Developed a comprehensive A3-sized Geospatial Atlas featuring 20 primary maps and over 100 thematic layers</h3>
+             
+              <div class="page-turn-hint">
+                <i class="fas fa-hand-point-right"></i>
+                <span>Click to turn page</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Content Page (Explanation) -->
+          <div class="page content-page" style="background-color: #dedbd2;">
+            <div class="page-content">
+              <button class="close-page" aria-label="Close page">
+                <i class="fas fa-times"></i>
+              </button>
+              
+              <div class="content-header">
+                <h3><i class="fas fa-calendar-alt"></i>Abstract</h3>
+                <span class="project-category">Atlas preparation</span>
+              </div>
+              
+              <div class="content-body">
+                <p>Developed a comprehensive A3-sized Geospatial Atlas featuring 20 primary maps and over 100 thematic layers. This project integrated diverse spatial datasets to provide high-resolution environmental and urban insights.</p>
+                
+                <div class="project-features">
+                  <h4><i class="fas fa-list-check"></i> Major objectives:</h4>
+                  <ul style="text-align: justify;">
+                    <li>Advanced geospatial analysis including contour preparation, DEM generation, and 3D visualization.</li>
+                    <li>Hydrological modeling focusing on drainage, watershed analysis, and flood simulation.</li>
+                    <li>Network analysis and virtual city GIS integration for urban planning.</li>
+                    <li>Digital image processing using Landsat and High-Resolution Satellite (HRS) data to derive NDVI, NDBI, NDWI, and LST.</li>
+                    <li>Integration of multi-source data: Cadastral maps, Toposheets, GPS data, and Google Imagery.</li>
+                  </ul>
+                </div>
+
+                
+               <div class="tech-tags">
+                 <span class="tech-tag">ArcGIS</span>
+                <span class="tech-tag">QGIS</span>
+                <span class="tech-tag">Remote Sensing</span>
+                <span class="tech-tag">3D Modeling</span>
+                <span class="tech-tag">Python for GIS</span>
+                  
+                </div>
+              </div>
+              
+              <div class="page-nav-buttons">
+                <button class="page-nav-btn prev-page-btn">
+                  <i class="fas fa-chevron-left"></i> Back
+                </button>
+                <div class="page-indicator">
+                  <span class="current-page">1</span>/<span class="total-pages">2</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Page Corner for Visual Effect -->
+          <div class="page-corner"></div>
+        </div>
+      </div>
     </div>
-
-    <!-- Academic Projects -->
-    <div id="academic-projects" class="projects-grid active">
-      <div class="project-card">
-        <i class="fas fa-star"></i>
-        <h3>Astrological Prediction System</h3>
-        <p>Built with Spring Boot, this system provides personalized astrology insights, daily updates, and life predictions based on your zodiac sign.</p>
-      </div>
-      <div class="project-card">
-        <i class="fas fa-calendar-alt"></i>
-        <h3>Event Management System</h3>
-        <p>Developed using the MERN Stack, this advanced system offers a robust and scalable solution for managing events.</p>
-      </div>
-      <div class="project-card">
-        <i class="fas fa-chart-line"></i>
-        <h3>Research: Driving E-commerce Success with Advanced Machine Learning</h3>
-        <p>Published in Scopus, this research paper explores customer purchase patterns using machine learning.</p>
-      </div>
-    </div>
-
-
-
-
-
-    <div id="basic-projects" class="projects-grid">
-      <div class="project-card basic-project-card">
-        <div class="project-bg-image" style="background-image: url('p1.jpg');"></div>
-        <div class="project-content-visible">
-            <h3>Movie Website</h3>
-            <p>A dynamic movie browsing website built using HTML, CSS, and JavaScript, offering an interactive way to explore Movies.</p>
-            <a href="https://saivenkatachala.github.io/cine/" target="_blank" class="project-btn">Open Project</a>
-        </div>
-      </div>
-      <div class="project-card basic-project-card">
-        <div class="project-bg-image" style="background-image: url('p2.jpg');"></div>
-        <div class="project-content-visible">
-            <h3>Expense Tracker Website</h3>
-            <p>A simple and interactive expense tracker built using HTML, CSS, and JavaScript to help manage and monitor daily expenses.</p>
-            <a href="https://saivenkatachala.github.io/EXPENSE/" target="_blank" class="project-btn">Open Project</a>
-        </div>
-      </div>
-      <div class="project-card basic-project-card">
-        <div class="project-bg-image" style="background-image: url('p3.jpg');"></div>
-        <div class="project-content-visible">
-            <h3>Weather App</h3>
-            <p>A real-time weather forecasting web app built using JavaScript and OpenWeather API.</p>
-            <a href="https://saivenkatachala.github.io/Weather/" target="_blank" class="project-btn">Open Project</a>
-        </div>
-      </div>
-      <div class="project-card basic-project-card">
-        <div class="project-bg-image" style="background-image: url('p8.jpg');"></div>
-        <div class="project-content-visible">
-            <h3>Perfect Cards & Printers</h3>
-            <p>A modern website for a printing business built with HTML, CSS, and JavaScript.</p>
-            <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open Project</a>
-        </div>
-      </div>
-      <div class="project-card basic-project-card">
-        <div class="project-bg-image" style="background-image: url('P9.jpg');"></div>
-        <div class="project-content-visible">
-            <h3>Sharekaro</h3>
-            <p>A file-sharing platform concept developed using web technologies.</p>
-            <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open Project</a>
-        </div>
-      </div>
-      <div class="project-card basic-project-card">
-        <div class="project-bg-image" style="background-image: url('p5.jpg');"></div>
-        <div class="project-content-visible">
-            <h3>Todo List Website</h3>
-            <p>A lightweight and user-friendly to-do list app built using HTML, CSS, and JavaScript to efficiently organize daily tasks.</p>
-            <a href="https://saivenkatachala.github.io/todolist/" target="_blank" class="project-btn">Open Project</a>
-        </div>
-      </div>
-    </div>
-    <!-- Basic Projects -->
-    <!-- <div id="basic-projects" class="projects-grid">
-      <div class="project-card">
-        <img src="p1.jpg" alt="Project 1">
-        <h3>Movie Website </h3>
-        <p>A dynamic movie browsing website built using HTML, CSS, and JavaScript, offering an interactive way to explore Movies.</p>
-        <a href="https://saivenkatachala.github.io/cine/" target="_blank" class="project-btn">Open</a>
-      </div>
-      <div class="project-card">
-        <img src="p2.jpg" alt="Project 2">
-        <h3>Expense Tracker Website</h3>
-        <p>A simple and interactive expense tracker built using HTML, CSS, and JavaScript to help manage and monitor daily expenses.</p>
-        <a href="https://saivenkatachala.github.io/EXPENSE/" target="_blank" class="project-btn">Open</a>
-      </div>
-      <div class="project-card">
-        <img src="p3.jpg" alt="Project 3">
-        <h3>Weather App</h3>
-        <p>A real-time weather forecasting web app built using JavaScript and OpenWeather API.</p>
-        <a href="https://saivenkatachala.github.io/Weather/" target="_blank" class="project-btn">Open</a>
-      </div>
-      <div class="project-card">
-        <img src="p8.jpg" alt="Project 3">
-        <h3>Perfect Cards & Printers</h3>
-        <p>A real-time weather forecasting web app built using JavaScript and OpenWeather API.</p>
-        <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open</a>
-      </div>
-      <div class="project-card">
-        <img src="P9.jpg" alt="Project 3">
-        <h3>Sharekaro</h3>
-        <p>A real-time weather forecasting web app built using JavaScript and OpenWeather API.</p>
-        <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open</a>
-      </div>
-      <div class="project-card">
-        <img src="p5.jpg" alt="Project 4">
-        <h3>Todo List Website</h3>
-        <p>A lightweight and user-friendly to-do list app built using HTML, CSS, and JavaScript to efficiently organize daily tasks.</p>
-        <a href="https://saivenkatachala.github.io/todolist/" target="_blank" class="project-btn">Open</a>
-      </div>
-    </div> -->
-
   </div>
+  
 </section>
 
 
-
-  <!-- Skills Section -->
-  <section id="skills" class="skills-section">
+ <!-- Conferences Section -->
+  <section id="conferences" class="conferences-section">
     <div class="container">
-      <h2>Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-item">
-          <i class="devicon-c-plain colored"></i>
-          <p>C</p>
+      <h2>Conference</h2>
+      <div class="conferences-grid">
+        <div class="conference-card" style="background-color: #dedbd2;">
+          <i class="fas fa-globe"></i>
+          <h3>National seminar on water:sustainable management& challenges</h3>
+          <p><strong>Organized by:</strong> Malankara catholic college, mariyagiri-kanyakumari dist,Tamilnadu</p>
+          <p><strong>Date:</strong> 2024</p>
+          <p><strong>Mode:</strong> Ofline-presentation</p>
+          
         </div>
-        <div class="skill-item">
-          <i class="devicon-java-plain colored"></i>
-          <p>Java</p>
+       
+         <div class="conference-card" style="background-color: #dedbd2;">
+          <i class="fas fa-globe"></i>
+          <h3>National seminar on water:sustainable management& challenges</h3>
+          <p><strong>Organized by:</strong> Malankara catholic college, mariyagiri-kanyakumari dist,Tamilnadu</p>
+          <p><strong>Date:</strong> 2024</p>
+          <p><strong>Mode:</strong> Ofline-presentation</p>
+          
         </div>
-        <div class="skill-item">
-          <i class="devicon-html5-plain colored"></i>
-          <p>HTML</p>
-        </div>
-        <div class="skill-item">
-  <i class="devicon-css3-plain colored"></i>
-  <p>CSS</p>
-</div>
-        <div class="skill-item">
-          <i class="devicon-react-original colored"></i>
-          <p>React JS</p>
-        </div>
-        <div class="skill-item">
-       <i class="devicon-mysql-plain colored"></i>
-        <p>MySQL</p>
-        </div>
-        <div class="skill-item">
-  <i class="devicon-dotnetcore-plain colored"></i>
-  <p>.NET</p>
-</div>
+       
 
-<div class="skill-item">
-  <i class="devicon-csharp-plain colored"></i>
-  <p>C#</p>
-</div>
 
-        <div class="skill-item">
-          <i class="devicon-spring-plain colored"></i>
-          <p>Spring Boot</p>
-        </div>
       </div>
     </div>
   </section>
+
+
 
   <!-- Certificates Section -->
   <section id="certificates" class="certificates-section">
     <div class="container">
       <h2>Certificates</h2>
       <div class="certificates-grid">
-        <div class="certificate-card">
-          <h3><i class="fa-brands fa-redhat"></i>  Red Hat Certified Enterprise Application Developer</h3>
-          <a href="https://www.credly.com/badges/2817e8d8-0575-4f0d-b9f0-c14f1d4c2798/public_url" target="_blank" class="btn btn-validate">Validate</a>
+        <div class="certificate-card"  style="background-color: #dedbd2;">
+          <h3><img src="ced.png" class="cert-image" alt="Red Hat Certificate">proficiency in giospatial technologie</h3>
+          <a href="QGIS certificate.pdf" target="_blank" class="btn btn-validate">View</a>
         </div>
-        <div class="certificate-card">
-          <h3><i class="fa-brands fa-aws"></i>   AWS Certified Cloud Practitioner</h3>
-          <a href="https://www.credly.com/badges/bae2c3ab-83d1-40ba-85e3-8f45139e9a7f/public_url" target="_blank" class="btn btn-validate">Validate</a>
+        <div class="certificate-card" style="background-color: #dedbd2;">
+          <h3><img src="CWRDM.png" class="cert-image" alt="Red Hat Certificate">Workshop on Water Budgeting CWRDM</h3>
+          <a href="cwrdm.g.jpeg" target="_blank" class="btn btn-validate">View</a>
         </div>
-        <div class="certificate-card">
-          <h3><i class="fa-brands fa-aws"></i>   AWS Certified Solutions Architect – Associate</h3>
-          <a href="https://www.credly.com/badges/6c53cca0-6934-499b-af86-2492f001f0df/public_url" target="_blank" class="btn btn-validate">Validate</a>
+        <div class="certificate-card" style="background-color: #dedbd2;">
+          <h3><img src="ncess_logo.png" class="cert-image" alt="Red Hat Certificate">Internship NCESS</h3>
+          <a href="Internship.PDF" target="_blank" class="btn btn-validate">View</a>
         </div>
-        <div class="certificate-card">
-          <h3><i class="fa-solid fa-code"></i>   HackerRank Java (Basic)</h3>
-          <a href="https://www.hackerrank.com/certificates/ee28f8c53344" target="_blank" class="btn btn-validate">Validate</a>
+        <div class="certificate-card"  style="background-color: #dedbd2;">
+          <h3><img src="LCMS.png" class="cert-image" alt="Red Hat Certificate">LCMS</h3>
+          <a href="UTUKURI GOPI LMS (1).pdf" target="_blank" class="btn btn-validate">View</a>
         </div>
-      </div>
+        <div class="certificate-card" style="background-color: #dedbd2;">
+          <h3><img src="SWYAMM.png" class="cert-image" alt="Red Hat Certificate">Water Resources and Watershed Management(Swayam) </h3>
+          <a href="Swyam.PDF" target="_blank" class="btn btn-validate">View</a>
+        </div>
+        <div class="certificate-card" style="background-color: #dedbd2;">
+          <h3><img src="SKILL.png" class="cert-image" alt="Red Hat Certificate">POWER BI</h3>
+          <a href="Power BI Certificate_251215_120548.PDF" target="_blank" class="btn btn-validate">View</a>
+        </div>
+    
+</section>
+
+
+<!-- attestationSection -->
+
+<section id="attestation" class="attestation-section">
+    <div class="container">
+        <h2 class="section-title">UAE Educational Attestation</h2>
+        
+        <div class="uae-card" style="background-color: #dedbd2;">
+            <div class="verified-badge">
+                <span class="check-icon">✓</span> Verified for UAE
+            </div>
+            
+            <h2>Educational Attestation</h2>
+            <p class="subtitle">Legally Validated for Dubai Employment Visas</p>
+            
+            <hr>
+            
+            <div class="attestation-steps">
+                <div class="step">
+                    <span class="status-dot"></span>
+                    <p><strong>Home Country:</strong> HRD & MEA Verified</p>
+                </div>
+                <div class="step">
+                    <span class="status-dot"></span>
+                    <p><strong>UAE Embassy:</strong> Notarized & Stamped</p>
+                </div>
+                <div class="step">
+                    <span class="status-dot"></span>
+                    <p><strong>MOFA UAE:</strong> Final Digital Attestation</p>
+                </div>
+            </div>
+
+            <a href="attestaion.pdf" target="_blank" class="download-link">
+                <i class="fas fa-file-pdf"></i>
+                View Attested Certificate (PDF)
+            </a>
+        </div>
     </div>
   </section>
 
-  <!-- Internships Section -->
-  <section id="internships" class="internships-section">
-    <div class="container">
-      <h2>Internships</h2>
-      <div class="internships-grid">
-        <div class="internship-card">
-          <h3>AICTE - EduSkills Virtual Internship</h3>
-          <p>Duration: May - July</p>
+
+<!-- Field Survey Section -->
+<section id="field-survey" class="field-survey-section">
+  <div class="container">
+    <h2>Field Visits</h2>
+    <div class="field-survey-grid">
+      <!-- Card 1 -->
+      <div class="field-survey-card" style="background-color: #dedbd2;">
+        <div class="field-survey-card-inner">
+          <!-- Front Side (Image + Title + More) -->
+          <div class="field-survey-front">
+            <div class="field-survey-image">
+              <img src="ecology.png" alt="Ecological Field Studies">
+            </div>
+            <div class="field-survey-content">
+              <h3 class="field-survey-title">Ecological Field Studies</h3>
+              <div class="field-survey-more">
+                More </i>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Back Side (Detailed Text) -->
+          <div class="field-survey-back">
+            <div class="field-survey-back-content">
+              <div class="back-title">
+                <h3>Ecological Field Studies</h3>
+                <div class="back-close">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+              <p>Conducted comprehensive field surveys in various forest ecosystems for biodiversity assessment and conservation planning.</p>
+              <ul>
+                <li>Biodiversity assessment in tropical rainforests</li>
+                <li>Species inventory and habitat mapping</li>
+                <li>Conservation planning for endangered species</li>
+                <li>Ecosystem monitoring and evaluation</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="internship-card">
-          <h3>AWS Data Analytics Virtual Internship</h3>
-          <p>Duration: May - July</p>
+      </div>
+      
+      <!-- Card 2 -->
+      <div class="field-survey-card" style="background-color: #dedbd2;">
+        <div class="field-survey-card-inner">
+          <!-- Front Side (Image + Title + More) -->
+          <div class="field-survey-front">
+            <div class="field-survey-image">
+              <img src="eptri.png" alt="Forest Inventory">
+            </div>
+            <div class="field-survey-content">
+              <h3 class="field-survey-title">plantation& crop research</h3>
+              <div class="field-survey-more">
+                More </i>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Back Side (Detailed Text) -->
+          <div class="field-survey-back">
+            <div class="field-survey-back-content">
+              <div class="back-title">
+                <h3>Forest Inventory</h3>
+                <div class="back-close">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+              <p>Participated in forest inventory programs collecting data on tree species, density, and biomass estimation.</p>
+              <ul>
+                <li>Tree species identification and classification</li>
+                <li>Density and biomass estimation techniques</li>
+                <li>Forest health assessment</li>
+                <li>Carbon sequestration potential analysis</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Card 3 -->
+      <div class="field-survey-card" style="background-color: #dedbd2;">
+        <div class="field-survey-card-inner">
+          <!-- Front Side (Image + Title + More) -->
+          <div class="field-survey-front">
+            <div class="field-survey-image">
+              <img src="water.png" alt="Water Resource Assessment">
+            </div>
+            <div class="field-survey-content">
+              <h3 class="field-survey-title">ENVIRONMENTALENGINEERING</h3>
+              <div class="field-survey-more">
+                More </i>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Back Side (Detailed Text) -->
+          <div class="field-survey-back">
+            <div class="field-survey-back-content">
+              <div class="back-title">
+                <h3>Water Resource Assessment</h3>
+                <div class="back-close">
+                  <i class="fas fa-times"></i>
+                </div>
+              </div>
+              <p>Field studies on watershed management and water quality assessment in different ecological zones.</p>
+              <ul>
+                <li>Water quality sampling and analysis</li>
+                <li>Watershed management planning</li>
+                <li>Aquatic ecosystem assessment</li>
+                <li>Water conservation strategies</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
-  <!-- Contact Section -->
-<section id="contact" class="contact-section">
-  <div class="container">
-    <h2>Contact Me</h2>
-    <form id="contact-form">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-      </div>
-      <button type="submit" class="btn">Send Message</button>
-    </form>
-    <div id="form-response" class="form-response"></div>
   </div>
 </section>
+
+
+ <!-- Internship Section -->
+  <section id="intern" class="certificates-section">
+    <div class="container">
+      <h2>Internship</h2>
+      <div class="certificates-grid">
+        <div class="certificate-card" style="background-color: #dedbd2;">
+          <h3><img src="ncess_logo.png" class="cert-image" alt="Red Hat Certificate"> National Centre for Earth Science Studies, Trivandrum </h3>
+          <p> This study analyses the uses of X-ray flourescence  spectroscopy for the analysis of soil samples from Kabini river basin. Elemental analysis revealed the presence of major oxides and trace elements present in the soil, thus providing valuable insights about the nutrient availabilty and soil fertility of the river basin.</p>
+          <a href="Internship.PDF" target="_blank" class="btn btn-validate">View</a>
+        </div>
+    </div>
+   
+    </div>
+</section>
+
+
+
+
+
+<!-- Publications Section -->
+<!-- Paper Roll Publications Section -->
+<section id="publications" class="publications-section">
+    <div class="container">
+        <h2>Publications</h2>
+
+             <div class="hint-wrapper">
+    <div class="page-hint">
+          <i class="fas fa-hand-point-down"></i>
+        <span>Tap the rolled item to unroll</span>
+    </div>
+</div>
+
+<style>
+.hint-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:20px;
+}
+
+.page-hint{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 26px;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(6px);
+    border-radius:40px;
+    border:1px solid rgba(255,255,255,0.35);
+    color:#3a1f04;
+    font-size:14px;
+    font-weight:400;
+    opacity:0.9;
+    pointer-events:none;
+}
+
+.page-hint i{
+    font-size:16px;
+}
+</style>
+
+
+
+
+        <div class="publications-grid">
+           
+            <div class="paper-roll-card">
+                <div class="scroll-hint">Click to Unroll</div>
+                <div class="roll-rod top-fixed"></div>
+                <div class="pull-thread-wrapper">
+                    <div class="pull-thread"></div>
+                    <div class="pull-tassel"></div>
+                </div>
+                <div class="paper-unroller">
+                    <div class="paper-sheet">
+                        <div class="paper-content-inner">
+                            <span class="journal-tag"> Journal of Applied Electrochemistry-2024</span>
+                            <h3 class="paper-title">Photoelectrocatalytic oxidation of progesterone in water using carbon-coated titanium anode and vanadium pentoxide catalyst: dynamics of steroid removal</h3>
+                            <div class="paper-divider"></div>
+                           <div class="abstract-scroll-area">
+        <p class="paper-abstract">
+            <strong>Abstract:</strong> Progesterone (PGT) is a steroid hormone produced naturally by pregnant women. Advent of pharmaceuticals gave rise to synthetic production of PGT as a medicine for various pregnancy-related issues. As a result of synthetic production and high utilization rate of PGT, they have become an emerging contaminant in water sources worldwide. Conventional wastewater treatment is not competent enough to remove steroid contaminants. Hence, the current study attempted the degradation of 10 mg L−1 of PGT in water using photocatalysis (PC) followed by electrocatalytic oxidation (EC) using vanadium pentoxide (V2O5) and carbon-coated titanium (C/Ti) anode. Optimization studies found UV-C irradiation, pH 5, 50-mg L−1 catalyst dosage, 180-min PC followed by 300-min EC, and 69 mA cm−2 current density eliminating 96% COD and 71.5% TOC. Comparative studies showed that PC(UV-C) + EC was 50% and 25% more efficient than electrochemical oxidation and electrocatalytic oxidation for TOC removal. Photocatalytic pretreatment brought down current consumption of the process by 23 mA cm−2. High-resolution mass spectrometry (HRMS) studies were utilized to propose the degradation pathway that involved hydroxylation, demethylation, dehydroxylation, and decarboxylation mechanisms.
+        </p>
+    </div>
+                           <a href="https://link.springer.com/article/10.1007/s10800-024-02081-4" class="view-paper-btn">
+                                <span>View Full Publication</span>
+                                <i class="fas fa-scroll"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="roll-rod bottom-moving"></div>
+                </div>
+            </div>
+
+            <div class="paper-roll-card">
+                <div class="scroll-hint">Click to Unroll</div>
+                <div class="roll-rod top-fixed"></div>
+                <div class="pull-thread-wrapper"><div class="pull-thread"></div><div class="pull-tassel"></div></div>
+                <div class="paper-unroller">
+                    <div class="paper-sheet">
+                        <div class="paper-content-inner">
+                            <span class="journal-tag">Environment of Quality Management-2024</span>
+                            <h3 class="paper-title">Anodic oxidation of esomeprazole in water by carbon coated titanium (C/Ti) electrode: Optimization and degradation analysis</h3>
+                            <div class="paper-divider"></div>
+                            <div class="abstract-scroll-area">
+        <p class="paper-abstract">
+            <strong>Abstract:</strong>Esomeprazole (ESO) is one of the proton pump inhibitors (PPIs) that is commonly used to treat extreme acidity and gastrointestinal irritation. Since it is used at a high rate, it is now classified as a pollutant of emerging concern (CEC). ESO gravely jeopardizes the health of living beings because it persists in water and wastewater sources even after standard treatment. Studies on the effective removal of PPIs, especially ESO, are scarce. In the current study, esomeprazole is disintegrated in water using electrochemical oxidation (EO). Titanium cathode with sodium sulfate electrolyte and carbon coated titanium (C/Ti) anode were used to apply EO. Through optimization studies utilizing COD measurement, it was discovered that 93% of the COD could be removed at pH 3, 60 mM sodium sulfate concentration, 300 min treatment period, and 115 mA cm−2 current density. Whereas TOC research revealed only 44% mineralization, HPLC-PDA experiments revealed 100% ESO transformation. High resolution mass spectrometry (HRMS) studies were used to propose a degradation mechanism and pathway. The primary processes of degradation included desulfurization, thioperoxole group formation, sulfinyl benzimidazole group breakage, and demethylation. More than 20 reuses of the anode and cathode materials were possible without significantly lowering their oxidation efficiency.
+        </p>
+    </div>
+                            <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/tqem.22222" class="view-paper-btn"><span>View Full Publication</span><i class="fas fa-scroll"></i></a>
+                        </div>
+                    </div>
+                    <div class="roll-rod bottom-moving"></div>
+                </div>
+            </div>
+
+            <div class="paper-roll-card">
+                <div class="scroll-hint">Click to Unroll</div>
+                <div class="roll-rod top-fixed"></div>
+                <div class="pull-thread-wrapper"><div class="pull-thread"></div><div class="pull-tassel"></div></div>
+                <div class="paper-unroller">
+                    <div class="paper-sheet">
+                        <div class="paper-content-inner">
+                            <span class="journal-tag">research square- preprint </span>
+                            <h3 class="paper-title">Catalytic oxidation processes for the degradation ofProgesterone using V2O5 catalyst and C/Ti anode:Optimization and degradation dynamics</h3>
+                            <div class="paper-divider"></div>
+                            <div class="abstract-scroll-area">
+        <p class="paper-abstract">
+            <strong>Abstract:</strong> Progesterone (PGT) is a steroid hormone produced naturally by humans. Advent of pharmaceuticals has given rise to synthetic production of PGT as a medicine for various pregnancy related issues. As a result of synthetic production and utilization rate of PGT, they have become an emerging contaminant in water sources worldwide. Conventional wastewater treatment is not equipped to remove steroid contaminants. Hence, current study attempted the degradation of10 mgL− 1 of PGT in water using photocatalysis (PC) followed by electrocatalytic oxidation (EC) using Vanadium Pentoxide (V2O5) and carbon coated titanium (C/Ti) anode. Characterization involved XRD and FTIR spectral studies that established the stability of the catalyst with the fact that no adsorptive removal of PGT had taken place. Optimization studies found UV-C irradiation, pH 5, 50 mg L− 1 catalyst, 180 min PC, 210 min EC and 69 mA.cm− 2 managed to accomplish 97% COD and 71.5% TOC removal. Comparative studies showed that PC + EC (UV-C) was 50% and 25% more efficient than EO and EC, respectively, for TOC removal. PC pretreatment to EC was found capable of bringing down the current consumption requirement of electrolysis by 23 mA.cm− 2. High resolution mass spectrometry (HRMS) studies were utilized to propose the degradation pathway that involved hydroxylation, demethylation, dehydroxylation and decarboxylation mechanisms.
+        </p>
+    </div>
+                            <a href="https://www.researchsquare.com/article/rs-3292895/v1" class="view-paper-btn"><span>View Full Publication</span><i class="fas fa-scroll"></i></a>
+                        </div>
+                    </div>
+                    <div class="roll-rod bottom-moving"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<script>
+// Enhanced paper roll interaction
+document.addEventListener('DOMContentLoaded', function() {
+    const paperCards = document.querySelectorAll('.paper-roll-card');
+    
+    paperCards.forEach(card => {
+        let hasBeenClicked = false;
+        
+        card.addEventListener('click', function(e) {
+            if (e.target.closest('.view-paper-btn')) return;
+            
+            this.classList.toggle('active');
+            hasBeenClicked = true;
+            
+            // Remove hint after first click
+            const hint = this.querySelector('.scroll-hint');
+            if (hint && hasBeenClicked) {
+                hint.style.opacity = '0';
+                hint.style.visibility = 'hidden';
+                hint.style.transition = 'opacity 0.5s';
+            }
+        });
+        
+        // Restore hint after 10 seconds if not clicked
+        setTimeout(() => {
+            if (!hasBeenClicked) {
+                const hint = card.querySelector('.scroll-hint');
+                if (hint) {
+                    hint.style.animation = 'bounceHint 2s infinite';
+                }
+            }
+        }, 10000);
+    });
+});
+</script>
+
+<!-- Experience Section -->
+
+</section>
+<section id="experience" class="experience-section">
+    <div class="container">
+        <h2>Experience</h2>
+        <div class="experience-grid">
+            
+            <div class="experience-card" style="background-color: #dedbd2;">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3 style="color: #6a040f;">Project Assistant</h3>
+                <h3>Centre for Environment and Development, Hyderabad<br/></h3>
+                <h4>NOV2024 - Present</h4>
+                <p>Assisted in ongoing projects of CED such as Preparation of zonal master plan for ecosensitive zones of wildlife sanctuaries of Andra Pradesh.Heat hotspots mapping for urban areas using Landsat and Geospatial technologies</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Updated Skills Section with Buttons Below Title -->
+<!-- Clean Circular Skills Section -->
+<section id="skills" class="skills-section">
+  <div class="container">
+    <!-- Main Title -->
+    <h2 class="section-title">Skills</h2>
+    
+    <!-- Buttons Below Title -->
+    <div class="skills-buttons">
+      <button class="skills-btn active" id="tech-btn">
+        <i class="fas fa-cogs"></i>
+        <span>Technical</span>
+      </button>
+      
+      <button class="skills-btn" id="soft-btn">
+        <i class="fas fa-users"></i>
+        <span>Soft</span>
+      </button>
+    </div>
+
+    <!-- Skills Circle Container -->
+    <div class="skills-circle-container">
+      <!-- Technical Skills Circle -->
+      <div class="skills-circle active" id="tech-circle">
+        <div class="circle-center">
+          <i class="fas fa-cogs"></i>
+        </div>
+      </div>
+      
+      <!-- Soft Skills Circle -->
+      <div class="skills-circle" id="soft-circle">
+        <div class="circle-center">
+          <i class="fas fa-users"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+  <!-- Hobbies & Interests Section -->
+<section id="hobbies" class="hobbies-section">
+  <div class="container">
+    <h2>Hobbies & Interests</h2>
+    <div class="hobbies-grid">
+      <!-- Trekking & Hiking -->
+      <div class="hobby-card" data-hobby="trekking">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="TREAKKING.jpg" alt="Trekking & Hiking" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-mountain"></i>
+            </div>
+            <div class="hobby-title-front">Trekking & Hiking</div>
+          </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-mountain"></i>
+            <h3>Trekking & Hiking</h3>
+            <p>Exploring nature trails, which fuels my passion for environmental conservation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bird Watching -->
+      <div class="hobby-card" data-hobby="open Source">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="OPEN.jpg" alt="learning new cources" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-dove"></i>
+            </div>
+            <div class="hobby-title-front">open source></div>
+          </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-dove"></i>
+            <h3>open source></h3>
+            <p>Exploring new Python libraries and contributing to geospatial community projects.</p>
+          </div>
+        </div>
+      </div>
+
+        <!-- Tree Identification -->
+      <div class="hobby-card" data-hobby="open Source">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="PHOTOGRAPHY.jpg" alt="learning new cources" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-dove"></i>
+            </div>
+            <div class="hobby-title-front">open source></div>
+          </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-dove"></i>
+            <h3>open source></h3>
+            <p>Exploring new Python libraries and contributing to geospatial community projects.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tree Identification -->
+      <div class="hobby-card" data-hobby="tree-id">
+        <div class="hobby-card-inner">
+          <div class="hobby-card-front">
+            <img src="PHOTOGRAPHY.jpg" alt="Photography" class="hobby-image">
+            <div class="hobby-icon-overlay">
+              <i class="fas fa-tree"></i>
+            </div>
+            <div class="hobby-title-front">Photography><div>
+        </div>
+          <div class="hobby-card-back">
+            <button class="hobby-close-btn" aria-label="Close card">
+              <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-tree"></i>
+            <h3>photography</h3>
+            <p>Capturing landscapes and urban environments, often linked to my interest in spatial aesthetics.</p>
+          </div>
+        </div>
+      </div>
+
+      
+</section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <h2>Contact Me</h2>
+      <form id="contact-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+      <div id="form-response" class="form-response"></div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>&copy; 2025 SAI VENKAT. All rights reserved.</p>
+      <p>&copy; 2026 UTUKURI GOPI. All rights reserved.</p>
       <div class="social-links">
-        <a href="https://github.com/saivenkatachala" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/a-sai-venkat-509239226/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        <a href="https://www.instagram.com/its_saivenkat/" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://x.com/yourprofile" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://github.com/saivenkatachala" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="www.linkedin.com/in/utukuri-gopi" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/yaseena_56?igsh=MThqN2Q1aXp0YjJhNQ==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/yaseena34925" target="_blank"><i class="fab fa-twitter"></i></a>
       </div>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Contact Form Submission
+    const contactForm = document.getElementById('contact-form');
+    const formResponse = document.getElementById('form-response');
+
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('name', document.getElementById('name').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('message', document.getElementById('message').value);
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyOYYwHdcvQveOHtITYr1Gx6-QJJLoqCVIppT5naBBaIjzF8xlvEprdUNB4PpGHOMap6Q/exec';
+
+        formResponse.textContent = 'Sending message...';
+        formResponse.style.color = '#00bcd4';
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: formData, // Using FormData instead of JSON
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    formResponse.textContent = data.message || 'Message sent successfully!Thank you for contacting😇';
+                    formResponse.style.color = '#4caf50';
+                    contactForm.reset();
+                } else {
+                    formResponse.textContent = data.message || 'Error sending message. Please try again.';
+                    formResponse.style.color = '#f44336';
+                }
+            })
+            .catch(error => {
+                formResponse.textContent = 'Error sending message. Please try again.';
+                formResponse.style.color = '#f44336';
+                console.error('Error:', error);
+            });
+    });
+
+    // ===== SKILLS TABS FUNCTIONALITY =====
+    const skillsTabButtons = document.querySelectorAll('.skills-tab-btn');
+    const skillsGrids = document.querySelectorAll('.skills-grid');
+    
+    if (skillsTabButtons.length > 0) {
+      skillsTabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Remove active class from all buttons and grids
+          skillsTabButtons.forEach(btn => btn.classList.remove('active'));
+          skillsGrids.forEach(grid => grid.classList.remove('active'));
+          
+          // Add active class to clicked button
+          button.classList.add('active');
+          
+          // Show corresponding grid
+          const targetId = button.getAttribute('data-target');
+          const targetGrid = document.getElementById(targetId);
+          if (targetGrid) {
+            targetGrid.classList.add('active');
+          }
+        });
+      });
+    }
+
+    // ===== IMPROVED FLIP CARD FUNCTIONALITY =====
+    const hobbyCards = document.querySelectorAll('.hobby-card');
+    let activeCard = null;
+    
+    // Close all cards
+    function closeAllCards() {
+      hobbyCards.forEach(card => {
+        card.classList.remove('flipped');
+      });
+      activeCard = null;
+    }
+    
+    // Open specific card
+    function openCard(card) {
+      closeAllCards();
+      card.classList.add('flipped');
+      activeCard = card;
+    }
+    
+    // Toggle card
+    function toggleCard(card) {
+      if (card.classList.contains('flipped')) {
+        card.classList.remove('flipped');
+        activeCard = null;
+      } else {
+        openCard(card);
+      }
+    }
+    
+    // Add event listeners to cards
+    hobbyCards.forEach(card => {
+      // Front side click
+      const frontSide = card.querySelector('.hobby-card-front');
+      if (frontSide) {
+        frontSide.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleCard(card);
+        });
+      }
+      
+      // Close button
+      const closeBtn = card.querySelector('.hobby-close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeAllCards();
+        });
+      }
+    });
+    
+    // Close cards when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.hobby-card') && activeCard) {
+        closeAllCards();
+      }
+    });
+    
+    // Close cards with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && activeCard) {
+        closeAllCards();
+      }
+    });
+    
+    // ===== IMPROVED TOUCH HANDLING FOR MOBILE =====
+    hobbyCards.forEach(card => {
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchEndX = 0;
+      let touchEndY = 0;
+      
+      card.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+      
+      card.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        
+        // Check if it's a tap (not a scroll/swipe)
+        const deltaX = Math.abs(touchEndX - touchStartX);
+        const deltaY = Math.abs(touchEndY - touchStartY);
+        
+        if (deltaX < 10 && deltaY < 10) {
+          e.preventDefault();
+          toggleCard(this);
+        }
+      });
+    });
+
+    // ===== MOBILE SLIDER OPTIMIZATION =====
+    function updateSliderForMobile() {
+      const slider = document.querySelector('.profile-slider');
+      if (!slider) return;
+      
+      if (window.innerWidth <= 768) {
+        // Mobile optimizations
+        slider.style.height = '250px';
+        const slides = document.querySelectorAll('.profile-slide');
+        slides.forEach(slide => {
+          slide.style.padding = '0';
+        });
+        
+        // Adjust navigation buttons for mobile
+        const prevBtn = document.querySelector('.profile-slider-nav.prev');
+        const nextBtn = document.querySelector('.profile-slider-nav.next');
+        if (prevBtn) prevBtn.style.width = '35px';
+        if (prevBtn) prevBtn.style.height = '35px';
+        if (nextBtn) nextBtn.style.width = '35px';
+        if (nextBtn) nextBtn.style.height = '35px';
+        
+        // Adjust indicators
+        const indicators = document.querySelectorAll('.profile-slider-indicator');
+        indicators.forEach(ind => {
+          ind.style.width = '10px';
+          ind.style.height = '10px';
+        });
+      } else {
+        // Desktop settings
+        slider.style.height = '400px';
+      }
+    }
+    
+    // Run on load and resize
+    updateSliderForMobile();
+    window.addEventListener('resize', updateSliderForMobile);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Mobile Menu Toggle ---
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenu && navLinks) {
+            mobileMenu.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navLinks.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                
+                // Prevent body scroll when menu is open
+                if (navLinks.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close menu when clicking on a link (except dropdown toggles)
+            document.querySelectorAll('.nav-links > li:not(.dropdown) > a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!navLinks.contains(e.target) && !mobileMenu.contains(e.target) && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    
+                    // Close all dropdowns
+                    document.querySelectorAll('.dropdown').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+        }
+
+        // ===== MOBILE DROPDOWN FIX =====
+        const dropdowns = document.querySelectorAll('.dropdown');
+
+        dropdowns.forEach(dropdown => {
+            const toggle = dropdown.querySelector('.dropdown-toggle');
+            
+            if (toggle) {
+                toggle.addEventListener('click', function(e) {
+                    // Only for mobile
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Toggle active class on clicked dropdown
+                        const isActive = dropdown.classList.contains('active');
+                        
+                        // Close all other dropdowns
+                        dropdowns.forEach(otherDropdown => {
+                            if (otherDropdown !== dropdown) {
+                                otherDropdown.classList.remove('active');
+                            }
+                        });
+                        
+                        // Toggle current dropdown
+                        dropdown.classList.toggle('active');
+                        
+                        // If opening dropdown and menu is closed, open it
+                        if (!isActive && navLinks && !navLinks.classList.contains('active')) {
+                            navLinks.classList.add('active');
+                            mobileMenu.classList.add('active');
+                            document.body.style.overflow = 'hidden';
+                        }
+                    }
+                });
+            }
+        });
+
+        // Close dropdowns when clicking outside (for mobile)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                if (!e.target.closest('.dropdown')) {
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            }
+        });
+
+        // Close dropdowns when clicking on dropdown menu links
+        document.querySelectorAll('.dropdown-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    // Close the dropdown
+                    const dropdown = this.closest('.dropdown');
+                    if (dropdown) {
+                        dropdown.classList.remove('active');
+                    }
+                    
+                    // Close mobile menu
+                    if (navLinks) {
+                        navLinks.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+        });
+
+        // --- Project Tabs ---
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const projectGrids = document.querySelectorAll('.projects-grid');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                projectGrids.forEach(grid => grid.classList.remove('active'));
+                button.classList.add('active');
+                const targetId = button.getAttribute('data-target');
+                const targetGrid = document.getElementById(targetId);
+                if (targetGrid) {
+                    targetGrid.classList.add('active');
+                }
+            });
+        });
+        
+        // Ensure academic projects grid is active by default
+        const academicGrid = document.getElementById('academic-projects');
+        if (academicGrid && !academicGrid.classList.contains('active')) {
+            academicGrid.classList.add('active');
+        }
+
+        // --- Slider Logic ---
+        const slider = document.querySelector('.profile-slider');
+        const slides = document.querySelectorAll('.profile-slide');
+        const indicators = document.querySelectorAll('.profile-slider-indicator');
+        const prevBtn = document.querySelector('.profile-slider-nav.prev');
+        const nextBtn = document.querySelector('.profile-slider-nav.next');
+        
+        let currentSlide = 0;
+        let slideInterval;
+        const slideIntervalTime = 5000; // 5 seconds
+
+        function showSlide(index, direction = 'next') {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                slide.removeAttribute('data-direction');
+            });
+            
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // Handle wrap-around
+            if (index >= slides.length) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = index;
+            }
+            
+            slides[currentSlide].classList.add('active');
+            slides[currentSlide].setAttribute('data-direction', direction);
+            indicators[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1, 'next');
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1, 'prev');
+        }
+
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, slideIntervalTime);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                stopAutoSlide();
+                startAutoSlide();
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                stopAutoSlide();
+                startAutoSlide();
+            });
+        }
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                const direction = index > currentSlide ? 'next' : 'prev';
+                showSlide(index, direction);
+                stopAutoSlide();
+                startAutoSlide();
+            });
+        });
+
+        if (slider) {
+            slider.addEventListener('mouseenter', stopAutoSlide);
+            slider.addEventListener('mouseleave', startAutoSlide);
+            
+            slider.addEventListener('touchstart', stopAutoSlide);
+            slider.addEventListener('touchend', () => {
+                setTimeout(startAutoSlide, 3000);
+            });
+        }
+
+        showSlide(0);
+        startAutoSlide();
+
+        // --- Nav Scroll Effect ---
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // --- Smooth Scrolling ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 768 && navLinks && navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        
+                        // Close all dropdowns
+                        dropdowns.forEach(dropdown => {
+                            dropdown.classList.remove('active');
+                        });
+                    }
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });         
+</script>
 </body>
 </html>
