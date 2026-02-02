@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yaseena - Portfolio</title>
+  <link rel="icon" href="12.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    // Toggle menu
+    if (mobileMenu && navLinks) {
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+    }
+
+    // Optional: Hide/Show Project Tabs Logic (if you need the tabs to function)
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const projectGrids = document.querySelectorAll('.projects-grid');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove 'active' from all buttons and grids
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            projectGrids.forEach(grid => grid.classList.remove('active'));
+
+            // Add 'active' to the clicked button and its corresponding grid
+            button.classList.add('active');
+            const targetId = button.getAttribute('data-target');
+            const targetGrid = document.getElementById(targetId);
+            if (targetGrid) {
+                targetGrid.classList.add('active');
+            }
+        });
+    });
+
+    // Ensure the Academic Projects tab is active on load (based on your HTML setup)
+    const academicGrid = document.getElementById('academic-projects');
+    if (academicGrid && !academicGrid.classList.contains('active')) {
+        academicGrid.classList.add('active');
+    }
+});
+</script>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+ <nav>
+    <div class="container nav-container">
+        <h1 class="logo"><i class="fa-solid fa-user-tie"></i> Portfolio</h1>
+        <ul class="nav-links">
+            <li><a href="#home"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a></li>
+            <li><a href="#projects"><i class="fa-solid fa-laptop-code"></i> Projects</a></li>
+            <li><a href="#skills"><i class="fa-solid fa-lightbulb"></i> Skills</a></li>
+            <li><a href="#certificates"><i class="fa-solid fa-certificate"></i> Certificates</a></li>
+            <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Contact Me</a></li>
+        </ul>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+</nav>
+
+
+  <!-- Home Section -->
+  <section id="home" class="home-section">
+    <div class="container">
+      <div class="home-content">
+        <div class="home-text">
+          <h1>YASEENA</h1>
+          <p>Data Science Specialist | Machine Learning Enthusiast | Computer Science Engineer</p>
+          <div class="home-buttons">
+            <a href="#about" class="btn btn-primary">More <i class="fas fa-arrow-right"></i></a>
+            <a href="A_SAI_VENKAT_RESUME_2025.pdf" download class="btn btn-download"><i class="fas fa-download"></i> Download CV</a>
+          </div>
+        </div>
+        <div class="home-image">
+          <img src="sainew.jpg" alt="SAI VENKAT">
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Profile Slider Section -->
+  <section class="profile-slider-section">
+    <div class="profile-slider-container">
+      <h2 class="profile-slider-title">My Profile</h2>
+      
+      <div class="profile-slider">
+        <button class="profile-slider-nav prev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <div class="profile-slide active">
+          <div class="profile-slide-content">
+            <div class="profile-slide-image">
+              <img src="sainew.jpg" alt="SAI VENKAT">
+            </div>
+            <div class="profile-slide-text">
+              <h3>Data Science Specialist</h3>
+              <p>Passionate about leveraging machine learning and data analysis to solve complex problems. With a strong foundation in computer science and engineering, I specialize in developing innovative solutions that drive business success.</p>
+              <div class="profile-slide-stats">
+                <div class="profile-stat">
+                  <div class="profile-stat-value">9.36</div>
+                  <div class="profile-stat-label">CGPA</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value">4+</div>
+                  <div class="profile-stat-label">Certifications</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value">10+</div>
+                  <div class="profile-stat-label">Projects</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile-slide">
+          <div class="profile-slide-content">
+            <div class="profile-slide-image">
+              <img src="sainew.jpg" alt="SAI VENKAT">
+            </div>
+            <div class="profile-slide-text">
+              <h3>Technical Skills</h3>
+              <p>Proficient in a wide range of technologies including Java, Spring Boot, React JS, MySQL, and AWS cloud services. Experienced in full-stack development and data analytics with a focus on creating scalable and efficient solutions.</p>
+              <div class="profile-slide-stats">
+                <div class="profile-stat">
+                  <div class="profile-stat-value">8+</div>
+                  <div class="profile-stat-label">Languages</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value">5+</div>
+                  <div class="profile-stat-label">Frameworks</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value">3</div>
+                  <div class="profile-stat-label">Databases</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile-slide">
+          <div class="profile-slide-content">
+            <div class="profile-slide-image">
+              <img src="sainew.jpg" alt="SAI VENKAT">
+            </div>
+            <div class="profile-slide-text">
+              <h3>Achievements</h3>
+              <p>Published research in Scopus on machine learning applications in e-commerce. Certified in AWS Solutions Architecture and Red Hat Enterprise Application Development. Consistently maintaining academic excellence with a CGPA of 9.36.</p>
+              <div class="profile-slide-stats">
+                <div class="profile-stat">
+                  <div class="profile-stat-value">1</div>
+                  <div class="profile-stat-label">Research Paper</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value">2</div>
+                  <div class="profile-stat-label">Internships</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value">3</div>
+                  <div class="profile-stat-label">AWS Certs</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <button class="profile-slider-nav next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      
+      <div class="profile-slider-indicators">
+        <div class="profile-slider-indicator active"></div>
+        <div class="profile-slider-indicator"></div>
+        <div class="profile-slider-indicator"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-section">
+    <div class="container">
+      <h1>Career Objective</h1>
+      <p>Seeking a challenging role as a Data Science Specialist where I can leverage my expertise in machine learning, data analysis, and computer science engineering to contribute innovative solutions and drive success in a forward-thinking organization.</p>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education" class="education-section">
+    <div class="container">
+      <h2>Education</h2>
+      <div class="education-grid">
+        <div class="education-card">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>KL UNIVERSITY, BTech in Computer Science and Engineering</h3>
+          <p>CGPA: 9.36 | 2021 – 2025</p>
+        </div>
+        <div class="education-card">
+          <i class="fas fa-school"></i>
+          <h3>Mangal Vidyalayam, Central Board of Secondary Education (PCM)</h3>
+          <p>Percentage: 78% | 2019 – 2021</p>
+        </div>
+        <div class="education-card">
+          <i class="fas fa-school"></i>
+          <h3>Mangal Vidyalayam, Central Board of Secondary Education</h3>
+          <p>Percentage: 78% | 2018 – 2019</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Projects Section -->
+<section id="projects" class="projects-section">
+  <div class="container">
+    <h2>Projects</h2>
+    
+    <!-- Tabs for Academic and Basic Projects -->
+    <div class="project-tabs">
+      <button class="tab-btn active" data-target="academic-projects">Academic Projects</button>
+      <button class="tab-btn" data-target="basic-projects">Projects</button>
+    </div>
+
+    <!-- Academic Projects -->
+    <div id="academic-projects" class="projects-grid active">
+      <div class="project-card">
+        <i class="fas fa-star"></i>
+        <h3>Astrological Prediction System</h3>
+        <p>Built with Spring Boot, this system provides personalized astrology insights, daily updates, and life predictions based on your zodiac sign.</p>
+      </div>
+      <div class="project-card">
+        <i class="fas fa-calendar-alt"></i>
+        <h3>Event Management System</h3>
+        <p>Developed using the MERN Stack, this advanced system offers a robust and scalable solution for managing events.</p>
+      </div>
+      <div class="project-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Research: Driving E-commerce Success with Advanced Machine Learning</h3>
+        <p>Published in Scopus, this research paper explores customer purchase patterns using machine learning.</p>
+      </div>
+    </div>
+
+
+
+
+
+    <div id="basic-projects" class="projects-grid">
+      <div class="project-card basic-project-card">
+        <div class="project-bg-image" style="background-image: url('p1.jpg');"></div>
+        <div class="project-content-visible">
+            <h3>Movie Website</h3>
+            <p>A dynamic movie browsing website built using HTML, CSS, and JavaScript, offering an interactive way to explore Movies.</p>
+            <a href="https://saivenkatachala.github.io/cine/" target="_blank" class="project-btn">Open Project</a>
+        </div>
+      </div>
+      <div class="project-card basic-project-card">
+        <div class="project-bg-image" style="background-image: url('p2.jpg');"></div>
+        <div class="project-content-visible">
+            <h3>Expense Tracker Website</h3>
+            <p>A simple and interactive expense tracker built using HTML, CSS, and JavaScript to help manage and monitor daily expenses.</p>
+            <a href="https://saivenkatachala.github.io/EXPENSE/" target="_blank" class="project-btn">Open Project</a>
+        </div>
+      </div>
+      <div class="project-card basic-project-card">
+        <div class="project-bg-image" style="background-image: url('p3.jpg');"></div>
+        <div class="project-content-visible">
+            <h3>Weather App</h3>
+            <p>A real-time weather forecasting web app built using JavaScript and OpenWeather API.</p>
+            <a href="https://saivenkatachala.github.io/Weather/" target="_blank" class="project-btn">Open Project</a>
+        </div>
+      </div>
+      <div class="project-card basic-project-card">
+        <div class="project-bg-image" style="background-image: url('p8.jpg');"></div>
+        <div class="project-content-visible">
+            <h3>Perfect Cards & Printers</h3>
+            <p>A modern website for a printing business built with HTML, CSS, and JavaScript.</p>
+            <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open Project</a>
+        </div>
+      </div>
+      <div class="project-card basic-project-card">
+        <div class="project-bg-image" style="background-image: url('P9.jpg');"></div>
+        <div class="project-content-visible">
+            <h3>Sharekaro</h3>
+            <p>A file-sharing platform concept developed using web technologies.</p>
+            <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open Project</a>
+        </div>
+      </div>
+      <div class="project-card basic-project-card">
+        <div class="project-bg-image" style="background-image: url('p5.jpg');"></div>
+        <div class="project-content-visible">
+            <h3>Todo List Website</h3>
+            <p>A lightweight and user-friendly to-do list app built using HTML, CSS, and JavaScript to efficiently organize daily tasks.</p>
+            <a href="https://saivenkatachala.github.io/todolist/" target="_blank" class="project-btn">Open Project</a>
+        </div>
+      </div>
+    </div>
+    <!-- Basic Projects -->
+    <!-- <div id="basic-projects" class="projects-grid">
+      <div class="project-card">
+        <img src="p1.jpg" alt="Project 1">
+        <h3>Movie Website </h3>
+        <p>A dynamic movie browsing website built using HTML, CSS, and JavaScript, offering an interactive way to explore Movies.</p>
+        <a href="https://saivenkatachala.github.io/cine/" target="_blank" class="project-btn">Open</a>
+      </div>
+      <div class="project-card">
+        <img src="p2.jpg" alt="Project 2">
+        <h3>Expense Tracker Website</h3>
+        <p>A simple and interactive expense tracker built using HTML, CSS, and JavaScript to help manage and monitor daily expenses.</p>
+        <a href="https://saivenkatachala.github.io/EXPENSE/" target="_blank" class="project-btn">Open</a>
+      </div>
+      <div class="project-card">
+        <img src="p3.jpg" alt="Project 3">
+        <h3>Weather App</h3>
+        <p>A real-time weather forecasting web app built using JavaScript and OpenWeather API.</p>
+        <a href="https://saivenkatachala.github.io/Weather/" target="_blank" class="project-btn">Open</a>
+      </div>
+      <div class="project-card">
+        <img src="p8.jpg" alt="Project 3">
+        <h3>Perfect Cards & Printers</h3>
+        <p>A real-time weather forecasting web app built using JavaScript and OpenWeather API.</p>
+        <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open</a>
+      </div>
+      <div class="project-card">
+        <img src="P9.jpg" alt="Project 3">
+        <h3>Sharekaro</h3>
+        <p>A real-time weather forecasting web app built using JavaScript and OpenWeather API.</p>
+        <a href="https://perfectcards.netlify.app/" target="_blank" class="project-btn">Open</a>
+      </div>
+      <div class="project-card">
+        <img src="p5.jpg" alt="Project 4">
+        <h3>Todo List Website</h3>
+        <p>A lightweight and user-friendly to-do list app built using HTML, CSS, and JavaScript to efficiently organize daily tasks.</p>
+        <a href="https://saivenkatachala.github.io/todolist/" target="_blank" class="project-btn">Open</a>
+      </div>
+    </div> -->
+
+  </div>
+</section>
+
+
+
+  <!-- Skills Section -->
+  <section id="skills" class="skills-section">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <i class="devicon-c-plain colored"></i>
+          <p>C</p>
+        </div>
+        <div class="skill-item">
+          <i class="devicon-java-plain colored"></i>
+          <p>Java</p>
+        </div>
+        <div class="skill-item">
+          <i class="devicon-html5-plain colored"></i>
+          <p>HTML</p>
+        </div>
+        <div class="skill-item">
+  <i class="devicon-css3-plain colored"></i>
+  <p>CSS</p>
+</div>
+        <div class="skill-item">
+          <i class="devicon-react-original colored"></i>
+          <p>React JS</p>
+        </div>
+        <div class="skill-item">
+       <i class="devicon-mysql-plain colored"></i>
+        <p>MySQL</p>
+        </div>
+        <div class="skill-item">
+  <i class="devicon-dotnetcore-plain colored"></i>
+  <p>.NET</p>
+</div>
+
+<div class="skill-item">
+  <i class="devicon-csharp-plain colored"></i>
+  <p>C#</p>
+</div>
+
+        <div class="skill-item">
+          <i class="devicon-spring-plain colored"></i>
+          <p>Spring Boot</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificates Section -->
+  <section id="certificates" class="certificates-section">
+    <div class="container">
+      <h2>Certificates</h2>
+      <div class="certificates-grid">
+        <div class="certificate-card">
+          <h3><i class="fa-brands fa-redhat"></i>  Red Hat Certified Enterprise Application Developer</h3>
+          <a href="https://www.credly.com/badges/2817e8d8-0575-4f0d-b9f0-c14f1d4c2798/public_url" target="_blank" class="btn btn-validate">Validate</a>
+        </div>
+        <div class="certificate-card">
+          <h3><i class="fa-brands fa-aws"></i>   AWS Certified Cloud Practitioner</h3>
+          <a href="https://www.credly.com/badges/bae2c3ab-83d1-40ba-85e3-8f45139e9a7f/public_url" target="_blank" class="btn btn-validate">Validate</a>
+        </div>
+        <div class="certificate-card">
+          <h3><i class="fa-brands fa-aws"></i>   AWS Certified Solutions Architect – Associate</h3>
+          <a href="https://www.credly.com/badges/6c53cca0-6934-499b-af86-2492f001f0df/public_url" target="_blank" class="btn btn-validate">Validate</a>
+        </div>
+        <div class="certificate-card">
+          <h3><i class="fa-solid fa-code"></i>   HackerRank Java (Basic)</h3>
+          <a href="https://www.hackerrank.com/certificates/ee28f8c53344" target="_blank" class="btn btn-validate">Validate</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internships Section -->
+  <section id="internships" class="internships-section">
+    <div class="container">
+      <h2>Internships</h2>
+      <div class="internships-grid">
+        <div class="internship-card">
+          <h3>AICTE - EduSkills Virtual Internship</h3>
+          <p>Duration: May - July</p>
+        </div>
+        <div class="internship-card">
+          <h3>AWS Data Analytics Virtual Internship</h3>
+          <p>Duration: May - July</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Contact Section -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <h2>Contact Me</h2>
+    <form id="contact-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+    <div id="form-response" class="form-response"></div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 SAI VENKAT. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://github.com/saivenkatachala" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/a-sai-venkat-509239226/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/its_saivenkat/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://x.com/yourprofile" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
